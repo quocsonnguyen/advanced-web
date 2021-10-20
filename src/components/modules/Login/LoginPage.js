@@ -2,6 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import styles from '../Login/LoginPage.module.css'
+import { style } from 'dom-helpers';
 
 
 function LoginPage() {
@@ -13,10 +14,10 @@ function LoginPage() {
                     <Col md={8}>
                     </Col>
 
-                    <Col md={4}>
+                    <Col md={4} className={styles.Login_content}>
                         <h2 className={styles.Login_title}>Hệ Thống Thông Tin <br/>Sinh Viên</h2>
                         
-                        <Form action='/login' method='POST' >
+                        <Form action='/login' method='POST' className={styles.Login_form}>
                             
                             <Form.Group className="mb-3" controlId="formEmail">
                                 <Form.Label>Email </Form.Label>
@@ -29,7 +30,7 @@ function LoginPage() {
                             </Form.Group>
 
                             <div>
-                                <Button variant="primary" type="submit" > Login </Button>
+                                 <Button variant="primary" type="submit" > Login </Button>{/* Design a Button Components For Further Usage */}
                                 {/* Reserved For Google */}
                             </div>
                         </Form>

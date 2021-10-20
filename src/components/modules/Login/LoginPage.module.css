@@ -21,6 +21,18 @@
     color: white;
 }
 
+.Login_content{
+    padding-top: 40px;
+}
+
+.Login_button{
+    padding-top: 300px;
+}
+
+.Login_form{
+    padding-top: 70px;
+}
+
 .Login_form_input{
     border-radius: 50px;
     height: 55px;
