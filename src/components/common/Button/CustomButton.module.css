@@ -1,0 +1,19 @@
+.fill_blue{
+    background: none;
+    border: 4px solid;
+    border-color: rgb(99, 153, 190);
+    font: inherit;
+    line-height: 1;
+    margin-top: 0.5em;
+    padding: 1em 2em;
+    border-radius: 50px;
+    transition: 0.25s;
+    float:left;
+}
+
+.fill_blue:hover{
+    box-shadow: inset 0 0 0 2em rgb(99, 153, 190);;
+    border-color: rgb(99, 153, 190);
+    color: white;
+}
+
