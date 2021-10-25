@@ -54,6 +54,15 @@
 
 }
 
+.Login_login_buttons {
+    display: flex;
+    align-items: center;
+}
+
+.Login_google_login {
+    margin-left: 10px;
+}
+
 @media all and (max-width: 600px) {
     .Login_background_image {
       background-color: rgb(192, 213, 235);
