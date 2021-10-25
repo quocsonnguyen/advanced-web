@@ -1,10 +1,11 @@
 import React from 'react';
+import { LoginPage } from './components/modules';
 
 function Test(props) {
     return (
-        <div>
-            hehe
-        </div>
+        <>
+            <LoginPage/>
+        </>
     );
 }
 
