@@ -10,6 +10,7 @@ const postsRouter = require('./routes/posts')
 const db = require('./database/index');
 
 
+
 const app = express();
 
 // view engine setup

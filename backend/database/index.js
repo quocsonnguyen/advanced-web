@@ -8,13 +8,18 @@ class Database {
     }
 
     _connect() {
-        mongoose.connect(mongodb_url, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+        mongoose
+            .connect(`mongodb+srv://Koc:long123@studentsocial.f561f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+            })
             .then(() => {
-                console.log("Cloud Database connection successfully!");
+                console.log("Successfully connect to MongoDB.");
             })
             .catch(err => {
-                console.log("Failed to connect database")
-            })
+                console.error("Connection error", err);
+                process.exit();
+            });
     }
 }
 
