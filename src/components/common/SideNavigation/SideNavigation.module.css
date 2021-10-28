@@ -1,0 +1,35 @@
+.SideNavigation {
+    background-color: #090d33;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    width: 350px;
+}
+
+.SideNavigation_title {
+    font-weight: bold;
+    text-align: center;
+    padding: .8rem 0;
+    border-bottom: 1px solid gray;
+}
+
+.SideNavigation_menu_item {
+    padding: 0.6rem 0rem 0.6rem 3.8rem;
+}
+
+.SideNavigation_footer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid gray;
+    padding: 0.6rem 0 0.6rem 2.4rem;
+    width: 100%;
+}
+
+.SideNavigation_avatar {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+}

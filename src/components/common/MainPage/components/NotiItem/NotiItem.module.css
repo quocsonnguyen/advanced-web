@@ -1,0 +1,27 @@
+.NotiItem {
+    border-radius: 10px;
+    padding: .2rem 1.2rem;
+    background-color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: .1s all linear;
+    min-width: 370px;
+}
+
+.NotiItem:hover {
+    border: 2px solid black;
+}
+
+.NotiItem_description {
+    color: gray;
+}
+
+.NotiItem_faculty {
+    color: red;
+    font-weight: bold;
+}
+
+.NotiItem_time {
+    font-size: 13px;
+    color: gray;
+}

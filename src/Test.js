@@ -4,9 +4,7 @@ import { Layout } from './components/common'
 function Test(props) {
     return (
         <div>
-            <Layout text="kkk">
-                lele
-            </Layout>
+            <Layout />
         </div>
     );
 }
