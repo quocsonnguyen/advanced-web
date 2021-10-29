@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongodb_url = 'mongodb+srv://Koc:long123@studentsocial.f561f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 const dbConfig = require("./config/db.config")
 
 class Database {
@@ -31,8 +30,9 @@ db.mongoose = mongoose;
 db.user = require("./models/user.model");
 db.role = require("./models/role.model");
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin", "faculty"];
 const Role = db.role;
+//Initial Run to Create Roles
 function initial() {
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
@@ -47,13 +47,13 @@ function initial() {
         });
   
         new Role({
-          name: "moderator"
+          name: "falculty"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'moderator' to roles collection");
+          console.log("added 'falculty' to roles collection");
         });
   
         new Role({
