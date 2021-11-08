@@ -11,7 +11,7 @@ module.exports = function (app) {
     });
 
     app.post(
-        "/api/auth/signup",
+        "/signup",
         [
             verifySignUp.checkAvaiable,
             verifySignUp.checkRoleAvaiable
@@ -19,7 +19,7 @@ module.exports = function (app) {
         controller.signup
     );
 
-    app.post("/api/auth/signin", controller.signin);
+    app.post("/signin", controller.signin);
 
 
 };

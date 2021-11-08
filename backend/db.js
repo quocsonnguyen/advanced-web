@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbConfig = require("../config/db.config")
+const dbConfig = require("./config/db.config")
 
 class Database {
     constructor() {
@@ -28,7 +28,7 @@ db.user = require("./models/user.model");
 db.role = require("./models/role.model");
 db.mongoose = mongoose;
 
-db.ROLES = ["user", "admin", "faculty"];
+db.ROLES = ["student", "admin", "faculty"];
 const Role = db.role;
 
 //Initial Run to Create Roles
@@ -36,13 +36,13 @@ function initial() {
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
         new Role({
-          name: "user"
+          name: "student"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'user' to roles collection");
+          console.log("added 'student' to roles collection");
         });
   
         new Role({
