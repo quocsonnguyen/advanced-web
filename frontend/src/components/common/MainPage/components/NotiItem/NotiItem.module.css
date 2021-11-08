@@ -12,6 +12,10 @@
     border: 2px solid black;
 }
 
+.NotiItem_noti_id {
+    display: none;
+}
+
 .NotiItem_description {
     color: gray;
 }

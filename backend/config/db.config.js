@@ -1,5 +1,5 @@
 module.exports = {
     HOST: "localhost",
     PORT: 27017,
-    DB: "ssn_db"
+    DB: "student-social-media"
   };
