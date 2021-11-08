@@ -1,31 +1,30 @@
 const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var postSchema = new mongoose.Schema({
-    creatorID : {
+let notificationSchema = new mongoose.Schema({
+    faculty : {
         type:String,
         required:true,
         unique:false,
         index:true,
     },
-    createdTime : {
+    title : {
+        type:String,
+        required:true,
+    },
+    description : {
         type:String,
         required:true,
     },
     content : {
         type:String,
-        required:true,
+        required:true
     },
-    imgURL : {
+    createdTime : {
         type:String,
-        required:false
+        required:true
     },
-    totalLike : { type:Number },
-    totalComment : { type:Number },
-    comments : [{
-        commentatorID : String, content: String, 
-    }]
 });
 
 //Export the model
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Notification', notificationSchema);

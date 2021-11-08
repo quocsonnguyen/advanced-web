@@ -22,8 +22,9 @@ function CardPost(props) {
                     src={props.postInfo.avatarImgURL} alt="avatar" />
 
                     <div className={s.CardPost_name_and_date}>
-                        <div><b>{props.postInfo.name}</b></div>
-                        <div className={s.CardPost_date}>{props.postInfo.time} <GoGlobe /></div>
+                        {/* <div><b>{props.postInfo.name}</b></div> */}
+                        <div><b>Ngu</b></div>
+                        <div className={s.CardPost_date}>{props.postInfo.createdTime} <GoGlobe /></div>
                     </div>
                 </div>
 
@@ -37,10 +38,10 @@ function CardPost(props) {
             </div>
 
             
-            {props.postInfo.postImgUrl && 
+            {props.postInfo.imgURL && 
                 <div className={s.CardPost_image}>
                     <img className={s.CardPost_image}
-                    src={props.postInfo.postImgUrl} alt="post's img" />
+                    src={props.postInfo.imgURL} alt="post's img" />
                 </div>
             }
             
