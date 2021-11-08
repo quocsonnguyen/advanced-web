@@ -6,11 +6,6 @@ const logger = require('morgan');
 const db = require('./db');
 const app = express();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const postsRouter = require('./routes/post.route');
-const notificationsRouter = require('./routes/notification.route');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,9 +14,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const authRouter = require('./routes/authenticate.route')
 const userRouter = require('./routes/user.route')
+const postRouter = require('./routes/post.route');
+const notificationRouter = require('./routes/notification.route');
 
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
+app.use('/api/post', postRouter)
+app.use('/api/notification', notificationRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

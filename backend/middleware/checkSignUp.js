@@ -1,5 +1,5 @@
-const Roles = require("../database/models/role.model");
-const User = require("../database/models/user.model");
+const Roles = require("../models/role.model");
+const User = require("../models/user.model");
 
 checkAvaiable = (req, res, next) => {
     //Check Duplicate Username
