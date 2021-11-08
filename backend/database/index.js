@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbConfig = require("./config/db.config")
+const dbConfig = require("../config/db.config")
 
 class Database {
     constructor() {
@@ -24,14 +24,13 @@ class Database {
     }
 }
 const db = {};
-
-db.mongoose = mongoose;
-
 db.user = require("./models/user.model");
 db.role = require("./models/role.model");
+db.mongoose = mongoose;
 
 db.ROLES = ["user", "admin", "faculty"];
 const Role = db.role;
+
 //Initial Run to Create Roles
 function initial() {
     Role.estimatedDocumentCount((err, count) => {
