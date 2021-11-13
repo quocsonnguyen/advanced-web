@@ -5,20 +5,25 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const db = require('./db');
 const app = express();
+const cors = require("cors");
 
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+require('./routes/authenticate.route')(app)
+require('./routes/user.route')(app)
 
-const authRouter = require('./routes/authenticate.route')
-const userRouter = require('./routes/user.route')
 const postRouter = require('./routes/post.route');
 const notificationRouter = require('./routes/notification.route');
 
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
+
 app.use('/api/post', postRouter)
 app.use('/api/notification', notificationRouter)
 

@@ -12,10 +12,10 @@ module.exports = function(app) {
 
   app.get("/all", controller.allAccess);
 
-  app.get("/user", [jwtAuth.verifyToken], controller.userBoard);
+  app.get("/student", [jwtAuth.verifyToken], controller.userBoard);
 
   app.get(
-    "/mod",
+    "/falculty",
     [jwtAuth.verifyToken, jwtAuth.isFalculty],
     controller.falcultyBoard
   );

@@ -5,7 +5,7 @@ const User = require("../models/user.model");
 const Role = require("../models/role.model");
 
 verifyToken = (req,res,next) => {
-    let token = req.header["x-access-token"];
+    let token = req.headers["x-access-token"];
 
     if (!token) {
         return res.status(403).send({message: "Không có token"});
