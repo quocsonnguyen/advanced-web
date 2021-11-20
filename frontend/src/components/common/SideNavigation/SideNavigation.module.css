@@ -33,3 +33,20 @@
     border-radius: 50%;
     margin-right: 0.8rem;
 }
+
+.SideNavigation_avatar:hover {
+    cursor: pointer;
+}
+
+.SideNavigation_upload_post_btn {
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    padding: .4rem 1.2rem;
+    margin-left: auto;
+    margin-right: 2.4rem;
+}
+
+.SideNavigation_upload_post_btn:hover {
+    cursor: pointer;
+}

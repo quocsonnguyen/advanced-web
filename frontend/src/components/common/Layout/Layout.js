@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { useNavigate  } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation';
 import MainPage from '../MainPage/MainPage'
 import { Row, Col } from 'react-bootstrap'
@@ -11,6 +12,19 @@ const USER = {
 }
 
 const Layout = (props) => {
+    // const navigate = useNavigate();
+
+    const requireAuth = () => {
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/login')
+        // }
+        // stay on this route since the user is authenticated
+    }
+
+    useEffect(() => {
+        requireAuth()
+    })
+
     return (
         <div className={s.Layout}>
             <Row>
@@ -20,6 +34,8 @@ const Layout = (props) => {
 
                 <Col xs={9}>
                     <MainPage user={USER} />
+                    {/* {props.user.role === "student" &&
+                    <MainPage user={USER} />} */}
                 </Col>
             </Row>
         </div>

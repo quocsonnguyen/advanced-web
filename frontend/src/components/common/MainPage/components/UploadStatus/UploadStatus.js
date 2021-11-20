@@ -6,7 +6,11 @@ import { RiVideoFill } from 'react-icons/ri'
 function UploadStatus(props) {
     const textareaRef = useRef(null);
     const [statusContent, setStatusContent ] = useState("");// you can manage data with it
+    const [videoURL, setVideoURL] = useState("")
     const [showUploadStatusBtn, setShowUploadStatusBtn] = useState(false)
+    const [showUploadPhoto, setShowUploadPhoto] = useState(false)
+    const [showUploadVideo, setShowUploadVideo] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(null);
 
     // useEffect(() => {
     //     textareaRef.current.style.height = "40px";
@@ -18,12 +22,29 @@ function UploadStatus(props) {
         setShowUploadStatusBtn(true)
     }
 
-    // const onStatusClickOut = () => {
-    //     setShowUploadStatusBtn(false)
-    // }
-
     const uploadStatus = () => {
-        console.log("oke");
+        let uid = localStorage.getItem('uid')
+        const formData  = new FormData();
+        formData.append('creatorID', uid);
+        formData.append('postFile', selectedImage);
+        formData.append('videoURL', videoURL);
+        
+        const request = {
+            headers: {'Content-Type' : 'multipart/form-data'},
+            method: 'POST',
+            body: formData
+        };
+        fetch('/api/post', request)
+    }
+
+    const showUploadPhotoSection = () => {
+        setShowUploadPhoto(true)
+        setShowUploadVideo(false)
+    }
+
+    const showUploadVideoSection = () => {
+        setShowUploadPhoto(false)
+        setShowUploadVideo(true)
     }
 
     return (
@@ -48,7 +69,6 @@ function UploadStatus(props) {
                         setStatusContent(e.target.value)
                     }}
                     onFocus={onStatusClick}
-                    // onBlur={onStatusClickOut}
                     type="text"
                     placeholder="Bạn muốn chia sẻ điều gì ?" 
                 />
@@ -56,20 +76,42 @@ function UploadStatus(props) {
                 
             </div>
 
-            {showUploadStatusBtn &&
-                <div onClick={uploadStatus} className={s.UploadStatus_upload_btn}>Upload</div>
-            }
-
             <hr/>
             <div className={s.UploadStatus_photo_and_video}>
-                <div className={s.UploadStatus_photo}>
+                <div onClick={showUploadPhotoSection} className={s.UploadStatus_photo}>
                     <BsFillImageFill /> Photo
                 </div>
-                <div className={s.UploadStatus_video}>
+                <div onClick={showUploadVideoSection} className={s.UploadStatus_video}>
                     <RiVideoFill /> Video
                 </div>
             </div>
+            
+            {showUploadPhoto &&
+                <input className={s.UploadStatus_photo_input} name="image" type="file"
+                onChange={(event) => {
+                    console.log(event.target.files[0]);
+                    setSelectedImage(event.target.files[0]);
+                }}
+                />
+            }
 
+            {/* {selectedImage && (
+                <div>
+                <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
+                <br />
+                <button onClick={()=>setSelectedImage(null)}>Remove</button>
+                </div>
+            )} */}
+
+            {showUploadVideo &&
+                <input className={s.UploadStatus_youtubeLink_input}
+                type="text" placeholder="Link youtube video"
+                value={videoURL} onChange={e => setVideoURL(e.target.value)} />
+            }
+
+            {showUploadStatusBtn &&
+                <div onClick={uploadStatus} className={s.UploadStatus_upload_btn}>Upload</div>
+            }
         </div>
     );
 }

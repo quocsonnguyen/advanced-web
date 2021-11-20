@@ -8,7 +8,7 @@ function Notification(props) {
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        fetch("/notifications")
+        fetch("/api/notification")
             .then(res => res.json())
             .then(
                 (result) => {
