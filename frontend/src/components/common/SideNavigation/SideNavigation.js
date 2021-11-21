@@ -2,7 +2,9 @@ import React from 'react';
 import s from './SideNavigation.module.css'
 import { BiHome } from 'react-icons/bi'
 
+
 const SideNavigation = (props) => {
+
     return (
         <div className={s.SideNavigation}>
             <div className={s.SideNavigation_title}>Student Social Media</div>

@@ -12,9 +12,6 @@ const responseGoogle = (response) => {
 }
 
 
-
-
-
 export default class LoginPage extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +21,9 @@ export default class LoginPage extends Component {
 
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            loading: false,
+            message: ""
         }
     }
     onEmailChange(e) {
@@ -46,11 +45,15 @@ export default class LoginPage extends Component {
             }, error => {
                 const resMessage =
                     (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
+                        error.response.data &&
+                        error.response.data.message) ||
                     error.message ||
                     error.toString();
                 console.log(resMessage);
+                this.setState({
+                    loading: false,
+                    message: resMessage
+                });
             }
         )
     }
@@ -65,6 +68,14 @@ export default class LoginPage extends Component {
 
                         <Col md={4} className={styles.Login_content}>
                             <h2 className={styles.Login_title}><b>Hệ Thống Thông Tin <br />Sinh Viên</b></h2>
+
+                            {this.state.message && (
+                                <div className={styles.Login_Error} >
+                                    <div className="alert alert-danger" role="alert">
+                                        {this.state.message}
+                                    </div>
+                                </div>
+                            )}
 
                             <Form onSubmit={this.handleLogin} method='POST' className={styles.Login_form}>
 
