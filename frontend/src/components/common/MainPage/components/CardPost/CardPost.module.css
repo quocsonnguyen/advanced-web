@@ -32,7 +32,7 @@
     font-size: 12px;
 }
 
-.CardPost_more_option {
+.CardPost_toggle_btn {
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -40,11 +40,32 @@
     align-items: center;
     justify-content: center;
     transition: 0.3s all linear;
+    cursor: pointer;
+    color: #343a40;
+    border: none;
+    background-color: #ffffff;
 }
 
-.CardPost_more_option:hover {
+.CardPost_toggle_btn:hover {
     background-color: #e9ecf0;
-    cursor: pointer;
+    border: none;
+    color: #343a40;
+}
+
+.CardPost_toggle_btn:focus {
+    outline: none !important;
+    outline-offset: none !important;
+    background-color: #e9ecf0;
+    color: #343a40;
+}
+
+.CardPost_toggle_btn:after {
+    display: none;
+}
+
+.CardPost_toggle_menu {
+    margin-top: 5px;
+    background-color: #333;
 }
 
 .CardPost_content {
@@ -53,7 +74,8 @@
 }
 
 .CardPost_image {
-    max-height: 400px;
+    max-height: 500px;
+    min-height: 300px;
     text-align: center;
 }
 

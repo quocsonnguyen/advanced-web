@@ -16,14 +16,18 @@ var postSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    imgURL : {
+    image : {
+        type:String,
+        required:false
+    },
+    videoURL : {
         type:String,
         required:false
     },
     totalLike : { type:Number },
     totalComment : { type:Number },
     comments : [{
-        commentatorID : String, content: String, 
+        commenterID : String, content: String, createdTime : String
     }]
 });
 

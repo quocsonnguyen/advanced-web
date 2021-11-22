@@ -1,8 +1,9 @@
 .MainPage {
     padding: 1rem 0;
-    /* overflow-y: scroll; */
+    display: flex;
+    margin-left: 275px;
 }
 
 .MainPage_social_media {
-    /* overflow-y: scroll; */
+  
 }

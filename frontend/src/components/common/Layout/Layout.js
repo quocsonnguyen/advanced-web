@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { useNavigate  } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation';
 import MainPage from '../MainPage/MainPage'
+<<<<<<< HEAD
 import Register from '../RegisterPage/register'
 import ProfilePage from '../Content/UserProfile'
 import { Row, Col } from 'react-bootstrap'
+=======
+>>>>>>> main
 import s from './Layout.module.css'
 import authService from '../../../services/auth.service';
 
@@ -17,6 +21,7 @@ const USER = {
 
 
 const Layout = (props) => {
+<<<<<<< HEAD
     let Logged_User = authService.getCurrentUser()
     console.log(Logged_User)
     return (
@@ -31,6 +36,29 @@ const Layout = (props) => {
                     <ProfilePage user={USER} />
                 </Col>
             </Row>
+=======
+    // const navigate = useNavigate();
+
+    const requireAuth = () => {
+        // if(!localStorage.getItem('token')) {
+        //     navigate('/login')
+        // }
+        // stay on this route since the user is authenticated
+    }
+
+    useEffect(() => {
+        requireAuth()
+    })
+
+    return (
+        <div className={s.Layout}>
+            <div>
+                <SideNavigation user={USER} />
+            </div>
+            <div className={s.Layout_MainPage}>
+                <MainPage user={USER} />
+            </div>
+>>>>>>> main
         </div>
     );
 };

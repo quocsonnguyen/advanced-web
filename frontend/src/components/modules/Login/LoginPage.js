@@ -12,6 +12,7 @@ const responseGoogle = (response) => {
 }
 
 
+<<<<<<< HEAD
 export default class LoginPage extends Component {
     constructor(props) {
         super(props);
@@ -68,6 +69,16 @@ export default class LoginPage extends Component {
 
                         <Col md={4} className={styles.Login_content}>
                             <h2 className={styles.Login_title}><b>Hệ Thống Thông Tin <br />Sinh Viên</b></h2>
+=======
+function LoginPage() {
+    return (
+        <>
+            <div className={styles.Login_background_image}></div>
+            <Container fluid className={styles.Login_container}>
+                <Row>
+                    <Col md={8}>
+                    </Col>
+>>>>>>> main
 
                             {this.state.message && (
                                 <div className={styles.Login_Error} >
