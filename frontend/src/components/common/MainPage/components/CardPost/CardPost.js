@@ -3,8 +3,10 @@ import s from './CardPost.module.css'
 import YoutubeEmbed from '../../../YoutubeEmbed/YoutubeEmbed'
 import CommentItem from '../CommentItem/CommentItem';
 import CommentInput from '../CommentInput/CommentInput';
+import EditPostModal from '../EditPostModal/EditPostModal';
+import DeletePostModal from '../DeletePostModal/DeletePostModal'
+import { Dropdown } from 'react-bootstrap'
 import { BsThreeDots } from 'react-icons/bs'
-import { GoGlobe } from 'react-icons/go'
 import { FcLike } from 'react-icons/fc'
 import { FaRegComment } from 'react-icons/fa'
 import io from 'socket.io-client';
@@ -12,12 +14,16 @@ const socket = io();
 
 function CardPost(props) {
     const [postID] = useState(props.postInfo._id)
+    const [showOptions] = useState(props.postInfo.creatorID === localStorage.getItem('uid'))
     const [commentContent, setCommentContent] = useState("")
     const [showComment, setShowComment] = useState(false);
+    const [content, setContent] = useState(props.postInfo.content)
     const [totalLike, setTotalLike] = useState(props.postInfo.totalLike)
     const [totalComment, setTotalComment] = useState(props.postInfo.totalComment)
     const [comments, setComments] = useState(props.postInfo.comments)
     const [reLoadPost, setReLoadPost] = useState(false)
+    const [showModalEdit, setShowModalEdit] = useState(false)
+    const [showModalDelete, setShowModalDelete] = useState(false)
 
     socket.on('reRenderPost', (pid) => {
         if (postID === pid) {
@@ -31,6 +37,7 @@ function CardPost(props) {
             .then(res => res.json())
             .then(
                 result => {
+                    setContent(result.content)
                     setTotalLike(result.totalLike)
                     setTotalComment(result.totalComment)
                     setComments(result.comments)
@@ -39,7 +46,7 @@ function CardPost(props) {
                     console.log(error);
                 }
             )
-    }, [reLoadPost])
+    }, [reLoadPost, postID])
 
     const renderCommentSection = () => {
         setShowComment(!showComment)
@@ -69,6 +76,22 @@ function CardPost(props) {
     //     fetch(`/api/post/${postID}/unlike`, { method: 'POST' })
     // }
 
+    const showModalEditPost = () => {
+        setShowModalEdit(true)
+    }
+
+    const closeModalEditPost = () => {
+        setShowModalEdit(false)
+    }
+
+    const showModalDeletePost = () => {
+        setShowModalDelete(true)
+    }
+
+    const closeModalDeletePost = () => {
+        setShowModalDelete(false)
+    }
+
     return (
         <div className={s.CardPost}>
             <div className={s.CardPost_post_info}>
@@ -80,18 +103,44 @@ function CardPost(props) {
 
                     <div className={s.CardPost_name_and_date}>
                         {/* <div><b>{props.postInfo.name}</b></div> */}
-                        <div><b>Ngu</b></div>
-                        <div className={s.CardPost_date}>{props.postInfo.createdTime} <GoGlobe /></div>
+                        <div><b>Viet Trung</b></div>
+                        <div className={s.CardPost_date}>{props.postInfo.createdTime}</div>
                     </div>
                 </div>
 
-                <div className={s.CardPost_more_option}>
-                    <BsThreeDots />
-                </div>
+                {
+                    showOptions && 
+                    <Dropdown >
+                        <Dropdown.Toggle variant="success" bsPrefix="p-0" className={s.CardPost_toggle_btn}>
+                            <BsThreeDots />
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu variant="dark" className={s.CardPost_toggle_menu}>
+                            <Dropdown.Item onClick={showModalEditPost}>
+                                Sửa bài viết
+                            </Dropdown.Item>
+
+                            <Dropdown.Item onClick={showModalDeletePost}>
+                                Xoá bài viết
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                }
+
+                <EditPostModal
+                    handleClose={closeModalEditPost} isShow={showModalEdit}
+                    postInfo={props.postInfo}
+                />
+
+                <DeletePostModal
+                    handleClose={closeModalDeletePost} isShow={showModalDelete}
+                    postID={props.postInfo._id}
+                />
+
             </div>
 
             <div className={s.CardPost_content}>
-                {props.postInfo.content}
+                {content}
             </div>
 
             
@@ -127,7 +176,9 @@ function CardPost(props) {
                     <div className={s.CardPost_comment_section}>
                         {comments.map((cmt) => {
                             return (
-                                <CommentItem key={cmt.id} name={cmt.name} content={cmt.content} imgUrl={cmt.img_url} />
+                                <CommentItem 
+                                    key={cmt.id} name={cmt.name} createdTime={cmt.createdTime}
+                                    content={cmt.content} imgUrl={cmt.img_url} />
                             )
                         })}
                         <CommentInput user={props.user}

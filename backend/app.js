@@ -20,6 +20,10 @@ io.on("connection", function(socket) {
     io.emit('reRenderFeed')
   })
 
+  socket.on('reloadFeed', () => {
+    io.emit('reRenderFeed')
+  })
+
   socket.on('editPost', (pid) => {
     io.emit('reRenderPost', pid)
   })

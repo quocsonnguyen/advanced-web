@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 // import { useNavigate  } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation';
 import MainPage from '../MainPage/MainPage'
-import { Row, Col } from 'react-bootstrap'
 import s from './Layout.module.css'
 
 const USER = {
@@ -27,17 +26,12 @@ const Layout = (props) => {
 
     return (
         <div className={s.Layout}>
-            <Row>
-                <Col xs={3}>
-                    <SideNavigation user={USER} />
-                </Col>
-
-                <Col xs={9}>
-                    <MainPage user={USER} />
-                    {/* {props.user.role === "student" &&
-                    <MainPage user={USER} />} */}
-                </Col>
-            </Row>
+            <div>
+                <SideNavigation user={USER} />
+            </div>
+            <div className={s.Layout_MainPage}>
+                <MainPage user={USER} />
+            </div>
         </div>
     );
 };

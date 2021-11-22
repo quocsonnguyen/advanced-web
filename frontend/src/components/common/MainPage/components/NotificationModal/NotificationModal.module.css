@@ -1,0 +1,15 @@
+.NotificationModal_title {
+    /* font-weight: 650; */
+    /* font-size: 18px; */
+}
+
+.NotificationModal_from {
+    color: gray;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.NotificationModal_faculty {
+    color: red;
+}

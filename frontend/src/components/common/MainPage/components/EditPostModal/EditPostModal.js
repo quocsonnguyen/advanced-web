@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import s from './UploadPostModal.module.css'
+import s from './EditPostModal.module.css'
 import axios from 'axios';
 import io from 'socket.io-client'
 const socket = io()
 
-function UploadPostModal(props) {
-    const [postContent, setPostContent ] = useState("")
-    const [videoURL, setVideoURL] = useState("")
+function EditPostModal(props) {
+    const [postContent, setPostContent] = useState(props.postInfo.content)
+    const [videoURL, setVideoURL] = useState(props.postInfo.videoURL)
     const [postImage, setPostImage] = useState("")
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        let uid = localStorage.getItem('uid')
         let formData = new FormData()
-        formData.append('creatorID', uid)
         formData.append('content', postContent)
         formData.append('postImage', postImage)
         formData.append('videoURL', videoURL)
             
-        axios.post('/api/post', formData)
+        axios.post(`/api/post/${props.postInfo._id}`, formData)
         .then(res => {
             props.handleClose()
             if (res.status === 200) {
-                props.handleSuccess()
-                socket.emit('newPost')
+                // props.handleSuccess()
+                socket.emit('editPost', props.postInfo._id)
             } else {
-                props.handleFail()
+                // props.handleFail()
             }
         })
-        
-        
     }
 
     return (
@@ -41,7 +37,7 @@ function UploadPostModal(props) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Đăng bài viết</Modal.Title>
+                    <Modal.Title>Chỉnh sửa bài viết</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
@@ -68,12 +64,12 @@ function UploadPostModal(props) {
                                 onChange={e => setVideoURL(e.target.value)} />
                         </Form.Group>
 
-                        <div className={s.UploadPostModal_buttons}>
+                        <div className={s.EditPostModal_buttons}>
                             <Button onClick={props.handleClose} type="button" variant="secondary">
                                 Huỷ
                             </Button>
-                            <Button className={s.UploadPostModal_submit_btn} type="submit" variant="success">
-                                Đăng bài
+                            <Button className={s.EditPostModal_submit_btn} type="submit" variant="success">
+                                Chỉnh sửa
                             </Button>
                         </div>
                     </Form>
@@ -83,4 +79,4 @@ function UploadPostModal(props) {
     );
 }
 
-export default UploadPostModal;
+export default EditPostModal;

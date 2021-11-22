@@ -3,6 +3,16 @@ const router = express.Router();
 const PostModel = require('../models/post.model')
 const fileUpload = require('../middleware/fileUpload')
 
+const getTime = () => {
+  let today  = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+  let hour = String(today.getHours()).padStart(2, '0');
+  let minute = String(today.getMinutes()).padStart(2, '0')
+  let createdTime = dd + '/' + mm + '/' + yyyy + ', ' + hour + ':' + minute;
+  return createdTime
+}
 
 /* ROUTE */
 router.get('/', async function(req, res, next) {
@@ -13,14 +23,7 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/', fileUpload.single('postImage'), function(req, res) {
-  let today  = new Date();
-  let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  let yyyy = today.getFullYear();
-  let hour = String(today.getHours()).padStart(2, '0');
-  let minute = String(today.getMinutes()).padStart(2, '0')
-  let createdTime = dd + '/' + mm + '/' + yyyy + ', ' + hour + ':' + minute;
-
+  let createdTime = getTime()
   let imageName = req.body.postImage === '' ? '' : req.file.filename
 
   let post = {
@@ -49,9 +52,25 @@ router.get('/:postID', async function(req, res) {
   res.end(JSON.stringify(post))
 });
 
+router.post('/:postID', fileUpload.single('postImage'), async function(req, res) {
+  let postID = req.params.postID
+  let imageName = req.body.postImage === '' ? '' : req.file.filename
+
+  await PostModel.findOneAndUpdate(
+    { _id: postID },
+    {
+      content : req.body.content,
+      image : imageName,
+      videoURL : req.body.videoURL
+    }
+  )
+  res.end()
+});
+
 router.post('/:postID/comment', function(req, res) {
   let postID = req.params.postID
-  let comment = {commenterID: req.body.commenterID, content: req.body.content}
+  let createdTime = getTime()
+  let comment = {commenterID: req.body.commenterID, content: req.body.content, createdTime: createdTime}
   PostModel.findOneAndUpdate(
     { _id: postID },
     { 
@@ -89,6 +108,18 @@ router.post('/:postID/unlike', function(req, res) {
     { 
       $inc: { totalLike: -1 }
     }
+  )
+  .exec()                  // Fails on both promise and callback versions
+  .catch(err => {
+      console.log(`caught error`, err);         // Never gets caught!!
+  });
+  res.end()
+});
+
+router.post('/:postID/delete', function(req, res) {
+  let postID = req.params.postID
+  PostModel.findOneAndDelete(
+    { _id: postID }
   )
   .exec()                  // Fails on both promise and callback versions
   .catch(err => {

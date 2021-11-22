@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { Row, Col } from 'react-bootstrap'
 import s from './MainPage.module.css'
 import CardPost from './components/CardPost/CardPost'
 import Notification from './components/Notification/Notification'
@@ -38,30 +37,24 @@ function MainPage(props) {
     } else {
         return (
             <div className={s.MainPage}>
-                <Row>
-                    <Col xs={8}>
-                        <div className={s.MainPage_social_media}>
-                            {posts.map((post, i) => {
-                                if (i === 0) {
-                                    return (
-                                        <CardPost key={post._id} user={props.user} postInfo={post} />
-                                    )
-                                } else {
-                                    return (
-                                        <div key={post._id}>
-                                            <hr />
-                                            <CardPost user={props.user} postInfo={post} />
-                                        </div>
-                                    )
-                                }
-                            })}
-                        </div>
-                    </Col>
-    
-                    <Col xs={4}>
-                        <Notification />
-                    </Col>
-                </Row>
+                <div className={s.MainPage_social_media}>
+                    {posts.map((post, i) => {
+                        if (i === 0) {
+                            return (
+                                <CardPost key={post._id} user={props.user} postInfo={post} />
+                            )
+                        } else {
+                            return (
+                                <div key={post._id}>
+                                    <hr />
+                                    <CardPost user={props.user} postInfo={post} />
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
+
+                <Notification />
             </div>
         );
     }
