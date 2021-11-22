@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const API = "http://localhost:3300/api/";
-
 class AuthService {
     login(email, password) {
-        return axios.post(API + "signin", {
+        return axios.post("/signin", {
             email,
             password
         }).then(res => {
@@ -20,7 +18,7 @@ class AuthService {
     }
 
     register(username, email, password, roles) {
-        return axios.post(API + "signup", {
+        return axios.post("/signup", {
             username,
             email,
             password,

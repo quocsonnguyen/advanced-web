@@ -14,8 +14,6 @@ import ModalSuccess from './components/ModalSuccess/ModalSuccess'
 
 
 const SideNavigation = (props) => {
-<<<<<<< HEAD
-=======
     const [isShowModal, setShowModal] = useState(false)
     const [isShowModalSuccess, setShowModalSuccess] = useState(false)
     // const [isShowModalFail, setShowModalFail] = useState(false)
@@ -39,7 +37,6 @@ const SideNavigation = (props) => {
     const closeModalSuccess = () => {
         setShowModalSuccess(false)
     }
->>>>>>> main
 
     return (
         <div className={s.SideNavigation}>

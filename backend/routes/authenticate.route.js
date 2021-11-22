@@ -9,6 +9,15 @@ module.exports = function (app) {
         );
         next();
     });
+    
+    app.post(
+        "/api/signup",
+        [
+            verifySignUp.checkAvaiable,
+            verifySignUp.checkRoleAvaiable
+        ],
+        controller.signup
+    );
 
     app.post(
         "/api/signup",
@@ -19,7 +28,13 @@ module.exports = function (app) {
         controller.signup
     );
 
+    app.post(
+        "/api/google/signup",
+        controller.signup
+    );
+
     app.post("/api/signin", controller.signin);
 
+    app.get("/api/:gid/isValid", controller.isGoogleUserValid);
 
 };

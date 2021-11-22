@@ -90,3 +90,21 @@ exports.signin = (req,res) => {
     })
 
 }
+
+exports.isGoogleUserValid = async (req, res) => {
+    let gid = req.params.gid
+
+    let user = await User.findOne({googleId : gid}).lean()
+    if (user) {
+        res.end(JSON.stringify({
+            code : 0,
+            user : user,
+            message : "that user is already in database"
+        }))
+    }
+
+    res.end(JSON.stringify({
+        code : -1,
+        message : "that user is not in database"
+    }))
+}

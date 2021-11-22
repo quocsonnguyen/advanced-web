@@ -6,6 +6,11 @@ const User = mongoose.model(
     username: String,
     email: String,
     password: String,
+    googleId: String,
+    image: {
+      type: String,
+      default: "default-account-image.png"
+    },
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
