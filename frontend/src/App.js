@@ -1,10 +1,18 @@
-import Test from './Test'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { LoginPage } from './components/modules'
+import { Layout } from './components/common'
+
 
 function App() {
+  localStorage.setItem('uid', '123456')
   return (
-    <div>
-      <Test/>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </>
   );
 }
 

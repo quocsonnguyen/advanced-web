@@ -18,6 +18,11 @@
     margin-right: 5px;
 }
 
+.CommentItem_commented_time {
+    color: gray;
+    font-size: 12px;
+}
+
 .CommentItem_more_option {
     border-radius: 50%;
     width: 35px;

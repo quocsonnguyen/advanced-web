@@ -1,9 +1,9 @@
 .Notification {
-    /* background-color: white; */
-    /* border-radius: 10px; */
-    /* padding: .2rem 1.2rem; */
-    position: fixed;
-    margin-right: 1.8rem;
+    /* position: fixed; */
+    /* top: 5px; */
+    /* right: 1.2rem; */
+    margin-left: 35px;
+    margin-right: 1.2rem;
 }
 
 .Notification_title {

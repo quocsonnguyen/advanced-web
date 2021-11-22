@@ -12,8 +12,6 @@ const responseGoogle = (response) => {
 
 
 function LoginPage() {
-
-
     return (
         <>
             <div className={styles.Login_background_image}></div>

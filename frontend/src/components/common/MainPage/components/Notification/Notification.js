@@ -8,7 +8,7 @@ function Notification(props) {
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        fetch("/notifications")
+        fetch("/api/notification")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -36,10 +36,7 @@ function Notification(props) {
                 <div className={s.Notification_list}>
                     {notifications.map((noti) => {
                         return (
-                            <NotiItem 
-                                key={noti._id} id={noti._id} faculty={noti.faculty}
-                                time={noti.createdTime} title={noti.title} desc={noti.description} 
-                            />
+                            <NotiItem key={noti._id} noti={noti} />
                         )
                     })}
                 </div>
