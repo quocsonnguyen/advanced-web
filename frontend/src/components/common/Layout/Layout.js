@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
+import s from './Layout.module.css'
 import { useNavigate  } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation';
 import MainPage from '../MainPage/MainPage'
-import Register from '../RegisterPage/register'
-import ProfilePage from '../Content/UserProfile'
-import s from './Layout.module.css'
-import authService from '../../../services/auth.service';
+// import Register from '../RegisterPage/register'
+// import ProfilePage from '../Content/UserProfile'
 
-
-const USER = {
-    id: "U001",
-    name: "Viet Trung",
-    avatarImgUrl: "https://media.karousell.com/media/photos/products/2018/08/18/ice_bear_we_bare_bears_stuff_toy_1534571614_1b8bf38b_progressive.jpg"
-}
+// import authService from '../../../services/auth.service';
 
 const Layout = (props) => {
     const navigate = useNavigate();
@@ -25,16 +19,15 @@ const Layout = (props) => {
 
     useEffect(() => {
         requireAuth()
-        // let user = JSON.parse(localStorage.getItem('user'))
-    }, [])
+    })
 
     return (
         <div className={s.Layout}>
             <div>
-                <SideNavigation user={USER} />
+                <SideNavigation />
             </div>
             <div className={s.Layout_MainPage}>
-                <MainPage user={USER} />
+                <MainPage />
             </div>
         </div>
     );

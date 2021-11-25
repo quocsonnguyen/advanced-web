@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 //Signup Handler
 exports.signup = (req, res) => {
     const user = new User({
-        username: req.body.username,
+        name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
     });
@@ -96,15 +96,62 @@ exports.isGoogleUserValid = async (req, res) => {
 
     let user = await User.findOne({googleId : gid}).lean()
     if (user) {
-        res.end(JSON.stringify({
+        res.write(JSON.stringify({
             code : 0,
             user : user,
             message : "that user is already in database"
         }))
+        res.end()
+    } else {
+        res.write(JSON.stringify({
+            code : -1,
+            message : "that user is not in database"
+        }))
+        res.end()
     }
+}
 
-    res.end(JSON.stringify({
-        code : -1,
-        message : "that user is not in database"
-    }))
+exports.googleSignup = async (req, res) => {
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+        googleId: req.body.googleId
+    });
+
+    user.save((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+
+        if (req.body.roles) {
+            Role.find({
+                name: { $in: req.body.roles }
+            }, (err, roles) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+
+                user.roles = roles.map(role => role._id);
+                user.save((err) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                })
+            })
+        } else {
+            res.send({message: "Chưa thêm quyền"});
+            return;
+        }
+    })
+
+    let thisUser = await User.findOne({googleId : req.body.googleId}).lean()
+    res.send({
+        message: "Đăng ký thành công",
+        user : thisUser
+    })
+    res.end()
 }

@@ -30,7 +30,7 @@ module.exports = function (app) {
 
     app.post(
         "/api/google/signup",
-        controller.signup
+        controller.googleSignup
     );
 
     app.post("/api/signin", controller.signin);

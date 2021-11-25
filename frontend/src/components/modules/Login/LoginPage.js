@@ -15,32 +15,42 @@ const LoginPage = (props) => {
 
     const navigate = useNavigate()
 
-    const responseGoogle = async (response) => {
-        let user = response.profileObj
-        console.log(user);
-        // let googleId = user.googleId
+    const responseGoogle = async (res) => {
+        let user = res.profileObj
+        let googleId = user.googleId
         
-        // let res
-        // await axios.get(`/api/${googleId}/isValid`).then(result => res = result.data)
+        let apiRes
+        await axios.get(`/api/${googleId}/isValid`).then(result => apiRes = result.data)
+        
+        if (apiRes.code === 0) {
+            localStorage.setItem('user', JSON.stringify({
+                id : apiRes.user._id,
+                name: apiRes.user.name,
+                image: apiRes.user.image,
+                role: apiRes.user.role
+            }))
+            localStorage.setItem('uid', apiRes.user._id)
+            navigate('/')
+        } else {
+            let newUser = {
+                name : user.name,
+                email : user.email,
+                password : user.email,
+                googleId : googleId,
+                roles : ['student']
+            }
 
-        // if (res.code === 0) {
-        //     localStorage.setItem('user', JSON.stringify({
-        //         // id : 
-        //         // name: user.name,
-        //         // image: "cc"
-        //     }))
-        // } else {
-        //     let newUser = {
-        //         username : user.name,
-        //         email : user.email,
-        //         password : user.email,
-        //         googleId : googleId,
-        //         roles : ['student']
-        //     }
-        //     await axios.post('/api/google/signup', newUser)
-        // }
-        
-        navigate('/')
+            let newApiRes
+            await axios.post('/api/google/signup', newUser).then(result => newApiRes = result.data)
+            localStorage.setItem('user', JSON.stringify({
+                id : newApiRes.user._id,
+                name: newApiRes.user.name,
+                image: newApiRes.user.image,
+                role: newApiRes.user.role
+            }))
+            localStorage.setItem('uid', newApiRes.user._id)
+            navigate('/')
+        }
     }
 
     const handleLogin = (e) => {
@@ -68,8 +78,8 @@ const LoginPage = (props) => {
     }
     
     useEffect(() => {
-        // checkLogin()
-    }, [])
+        checkLogin()
+    })
 
     return (
         <>

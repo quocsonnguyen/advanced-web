@@ -17,10 +17,10 @@ function CardPost(props) {
     const [showOptions] = useState(props.postInfo.creatorID === localStorage.getItem('uid'))
     const [commentContent, setCommentContent] = useState("")
     const [showComment, setShowComment] = useState(false);
-    const [content, setContent] = useState(props.postInfo.content)
-    const [totalLike, setTotalLike] = useState(props.postInfo.totalLike)
-    const [totalComment, setTotalComment] = useState(props.postInfo.totalComment)
-    const [comments, setComments] = useState(props.postInfo.comments)
+    const [content, setContent] = useState()
+    const [totalLike, setTotalLike] = useState()
+    const [totalComment, setTotalComment] = useState()
+    const [comments, setComments] = useState()
     const [reLoadPost, setReLoadPost] = useState(false)
     const [showModalEdit, setShowModalEdit] = useState(false)
     const [showModalDelete, setShowModalDelete] = useState(false)
@@ -96,14 +96,11 @@ function CardPost(props) {
         <div className={s.CardPost}>
             <div className={s.CardPost_post_info}>
                 <div className={s.CardPost_avatar_name_date}>
-                    {/* <img className={s.CardPost_avatar}
-                    src={props.postInfo.avatarImgURL} alt="avatar" /> */}
                     <img className={s.CardPost_avatar}
-                    src="https://media.karousell.com/media/photos/products/2018/08/18/ice_bear_we_bare_bears_stuff_toy_1534571614_1b8bf38b_progressive.jpg" alt="avatar" />
-
+                    src={`http://localhost:3300/api/image/${props.postInfo.creatorImage}`} alt="avatar" />
+                   
                     <div className={s.CardPost_name_and_date}>
-                        {/* <div><b>{props.postInfo.name}</b></div> */}
-                        <div><b>Viet Trung</b></div>
+                        <div><b>{props.postInfo.creatorName}</b></div>
                         <div className={s.CardPost_date}>{props.postInfo.createdTime}</div>
                     </div>
                 </div>
@@ -160,15 +157,15 @@ function CardPost(props) {
             <div className={s.CardPost_like_and_comment}>
                 <div className={s.CardPost_total_like_comment}>
                     <div><FcLike /> {totalLike}</div>
-                    <div>{totalComment} Comments</div>
+                    <div>{totalComment} Bình luận</div>
                 </div>
 
                 <div className={s.CardPost_like_comment_button}>
                     <div onClick={like} className={s.CardPost_like_button}>
-                        <FcLike /> Like
+                        <FcLike /> Thích
                     </div>
                     <div onClick={renderCommentSection} className={s.CardPost_comment_button}>
-                        <FaRegComment /> Comment
+                        <FaRegComment /> Bình luận
                     </div>
                 </div>
 
@@ -177,12 +174,14 @@ function CardPost(props) {
                         {comments.map((cmt) => {
                             return (
                                 <CommentItem 
-                                    key={cmt.id} name={cmt.name} createdTime={cmt.createdTime}
-                                    content={cmt.content} imgUrl={cmt.img_url} />
+                                    key={cmt._id} name={cmt.commenterName} createdTime={cmt.createdTime}
+                                    content={cmt.content} image={cmt.commenterImage} />
                             )
                         })}
-                        <CommentInput user={props.user}
-                        commentContent={commentContent} onChange={setCommentContent} uploadComment={uploadComment} />
+                        <CommentInput
+                            commentContent={commentContent} onChange={setCommentContent} 
+                            uploadComment={uploadComment} 
+                        />
                     </div>
                 }
             </div>

@@ -41,17 +41,21 @@ function MainPage(props) {
                     {posts.map((post, i) => {
                         if (i === 0) {
                             return (
-                                <CardPost key={post._id} user={props.user} postInfo={post} />
+                                <CardPost key={post._id} postInfo={post} />
                             )
                         } else {
                             return (
                                 <div key={post._id}>
                                     <hr />
-                                    <CardPost user={props.user} postInfo={post} />
+                                    <CardPost postInfo={post} />
                                 </div>
                             )
                         }
                     })}
+
+                    <div className={s.separator}>
+                        <h5>Xem thêm</h5>
+                    </div>
                 </div>
 
                 <Notification />
