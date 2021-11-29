@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from './components/modules'
-import { Layout, RegisterPage } from './components/common'
+import { RegisterPage, MainPage, Notification } from './components/common'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}
+        <Route path="/" element={<MainPage />}
           render={() => {
             if (!localStorage.getItem('user')) {
               navigate('/login')
@@ -19,6 +19,7 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/notifications" element={<Notification />} />
       </Routes>
     </>
   );

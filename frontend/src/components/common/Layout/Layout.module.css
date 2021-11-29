@@ -1,8 +1,41 @@
 .Layout {
     background-color: #e9ecf0;
-    display: flex;
+    padding-left: 24rem;
+    padding-right: 24rem;
 }
 
-.Layout_MainPage {
-    margin-left: 35px;
+@media screen and (max-width: 1366px) {
+    .Layout {
+        padding-left: 20rem;
+        padding-right: 20rem;
+    }
 }
+
+@media screen and (max-width: 1200px) {
+    .Layout {
+        padding-left: 13.2rem;
+        padding-right: 13.2rem;
+    }
+}
+
+@media screen and (max-width: 1048px) {
+    .Layout {
+        padding-left: 10.6rem;
+        padding-right: 10.6rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .Layout {
+        padding-left: 4.8rem;
+        padding-right: 4.8rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .Layout {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+}
+

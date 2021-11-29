@@ -17,21 +17,9 @@ const getTime = () => {
 
 /* ROUTE */
 router.get('/', async function(req, res, next) {
-  res.setHeader('Content-Type', 'application/json');
+  let numPosts = Number.parseInt(req.params.numPosts)
   let users = await UserModel.find({}).lean()
-  let posts = await PostModel.find({}).lean().sort({createdTime: -1})
-
-  // for (let i = 0; i < posts.length; i++) {
-  //   for (let j = 0; j < posts[i].comments.length; j++) {
-  //     for (let u = 0; u < users.length; u++) {
-  //       if (posts[i].comments[j].commenterID == users[u]._id) {
-  //         posts[i].comments[j].commenterName = users[u].name
-  //         posts[i].comments[j].commenterImage = users[u].image
-  //         break
-  //       }
-  //     }
-  //   }
-  // }
+  let posts = await PostModel.find({}).limit(numPosts).lean().sort({createdTime: -1})
 
   for (let i = 0; i < posts.length; i++) {
     for (let u = 0; u < users.length; u++) {
@@ -42,7 +30,27 @@ router.get('/', async function(req, res, next) {
       }
     }
   } 
-  // need to join user collection to get avatar, name, ...
+  
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(posts))
+});
+
+router.get('/num-posts/:numPosts', async function(req, res, next) {
+  let numPosts = Number.parseInt(req.params.numPosts)
+  let users = await UserModel.find({}).lean()
+  let posts = await PostModel.find({}).limit(numPosts).lean().sort({createdTime: -1})
+
+  for (let i = 0; i < posts.length; i++) {
+    for (let u = 0; u < users.length; u++) {
+      if (posts[i].creatorID == users[u]._id) {
+        posts[i].creatorName = users[u].name
+        posts[i].creatorImage = users[u].image
+        break
+      }
+    }
+  } 
+  
+  res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(posts))
 });
 

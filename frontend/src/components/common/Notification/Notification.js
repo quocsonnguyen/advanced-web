@@ -1,38 +1,28 @@
 import React, {useState, useEffect} from 'react';
 import s from './Notification.module.css'
-import NotiItem from '../NotiItem/NotiItem'
+import NotiItem from './components/NotiItem/NotiItem'
+import { Layout } from '../'
 
 function Notification(props) {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false)
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
         fetch("/api/notification")
             .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setNotifications(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+            .then(result => setNotifications(result))
     }, [])
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return <div>Loading...</div>;
-    } else {
-        return (
+    return (
+        <Layout>
             <div className={s.Notification}>
-                <div className={s.Notification_title}>
+                {/* <div className={s.Notification_title}>
                     <b>THÔNG BÁO</b>
+                </div> */}
+
+                <div className={s.separator}>
+                    <h5>THÔNG BÁO</h5>
                 </div>
-    
+
                 <div className={s.Notification_list}>
                     {notifications.map((noti) => {
                         return (
@@ -41,8 +31,8 @@ function Notification(props) {
                     })}
                 </div>
             </div>
-        );
-    }
+        </Layout>
+    );
 }
 
 export default Notification;

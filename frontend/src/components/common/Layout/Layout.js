@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import s from './Layout.module.css'
 import { useNavigate  } from "react-router-dom";
-import SideNavigation from '../SideNavigation/SideNavigation';
-import MainPage from '../MainPage/MainPage'
+import Navigation from '../Navigation/Navigation';
 // import Register from '../RegisterPage/register'
 // import ProfilePage from '../Content/UserProfile'
 
@@ -22,14 +21,12 @@ const Layout = (props) => {
     })
 
     return (
-        <div className={s.Layout}>
-            <div>
-                <SideNavigation />
+        <>
+            <Navigation />
+            <div className={s.Layout}>
+                {props.children}
             </div>
-            <div className={s.Layout_MainPage}>
-                <MainPage />
-            </div>
-        </div>
+        </>
     );
 };
 

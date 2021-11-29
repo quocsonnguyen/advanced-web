@@ -74,8 +74,8 @@
 }
 
 .CardPost_image {
-    max-height: 500px;
-    min-height: 300px;
+    /* max-height: 500px;
+    min-height: 300px; */
     text-align: center;
 }
 
