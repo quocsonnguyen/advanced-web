@@ -5,7 +5,7 @@ import styles from '../Login/LoginPage.module.css'
 import { CustomButton } from '../../common';
 import AuthService from '../../../services/auth.service';
 import { GoogleLogin } from 'react-google-login';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const LoginPage = (props) => {
@@ -18,28 +18,34 @@ const LoginPage = (props) => {
     const responseGoogle = async (response) => {
         let user = response.profileObj
         console.log(user);
-        // let googleId = user.googleId
-        
-        // let res
-        // await axios.get(`/api/${googleId}/isValid`).then(result => res = result.data)
+        let googleId = user.googleId
 
-        // if (res.code === 0) {
-        //     localStorage.setItem('user', JSON.stringify({
-        //         // id : 
-        //         // name: user.name,
-        //         // image: "cc"
-        //     }))
-        // } else {
-        //     let newUser = {
-        //         username : user.name,
-        //         email : user.email,
-        //         password : user.email,
-        //         googleId : googleId,
-        //         roles : ['student']
-        //     }
-        //     await axios.post('/api/google/signup', newUser)
-        // }
-        
+        let res
+        await axios.get(`/api/${googleId}/isValid`).then(result => res = result.data)
+
+        if (res.code === 0) {
+            console.log(res.message)
+            localStorage.setItem('user', JSON.stringify({
+                // id : 
+                // name: user.name,
+                // image: "cc"
+            }))
+        } else {
+            console.log(res.message)
+            let newUser = {
+                username: user.name,
+                email: user.email,
+                password: googleId,
+                googleId: googleId,
+                roles : ['student']
+            }
+            console.log(newUser)
+            await axios.post("/api/google/signup", newUser).then(result => {
+                console.log(result.code, result.message)
+            }
+            )
+        }
+
         navigate('/')
     }
 
@@ -66,7 +72,7 @@ const LoginPage = (props) => {
             navigate('/')
         }
     }
-    
+
     useEffect(() => {
         // checkLogin()
     }, [])
@@ -94,17 +100,17 @@ const LoginPage = (props) => {
 
                             <Form.Group className="mb-3" controlId="formEmail">
                                 <Form.Label><b>Email</b> </Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     name="email" value={email} type="email" placeholder="Enter email"
-                                    onChange={(e) => setEmail(e.target.value)}  className={styles.Login_form_input} 
+                                    onChange={(e) => setEmail(e.target.value)} className={styles.Login_form_input}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formPassword">
                                 <Form.Label><b>Password</b>  </Form.Label>
-                                <Form.Control 
+                                <Form.Control
                                     name="password" value={password} type="password" placeholder="Password"
-                                    onChange={(e) => setPassword(e.target.value)}  className={styles.Login_form_input} 
+                                    onChange={(e) => setPassword(e.target.value)} className={styles.Login_form_input}
                                 />
                             </Form.Group>
 
