@@ -45,7 +45,7 @@ const Navigation = (props) => {
                         navExpand && <>
                         <Nav className="me-auto">
                             <Nav.Link href="/notifications">Thông báo</Nav.Link>
-                            {/* <Nav.Link href="#link">Link</Nav.Link> */}
+                            <Nav.Link href="/manage">Quản lý</Nav.Link>
                         </Nav>
                         <Nav className={s.Navigation_name_and_avatar}>
                             <div className={s.Navigation_name}>

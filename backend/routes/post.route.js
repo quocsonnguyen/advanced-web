@@ -15,11 +15,15 @@ const getTime = () => {
   return createdTime
 }
 
+const getTotalPosts = async () => {
+  let posts = await PostModel.find({}).lean()
+  return posts.length
+}
+
 /* ROUTE */
 router.get('/', async function(req, res, next) {
-  let numPosts = Number.parseInt(req.params.numPosts)
   let users = await UserModel.find({}).lean()
-  let posts = await PostModel.find({}).limit(numPosts).lean().sort({createdTime: -1})
+  let posts = await PostModel.find({}).lean().sort({createdTime: -1})
 
   for (let i = 0; i < posts.length; i++) {
     for (let u = 0; u < users.length; u++) {
@@ -37,6 +41,7 @@ router.get('/', async function(req, res, next) {
 
 router.get('/num-posts/:numPosts', async function(req, res, next) {
   let numPosts = Number.parseInt(req.params.numPosts)
+  let totalPosts = await getTotalPosts()
   let users = await UserModel.find({}).lean()
   let posts = await PostModel.find({}).limit(numPosts).lean().sort({createdTime: -1})
 
@@ -51,7 +56,13 @@ router.get('/num-posts/:numPosts', async function(req, res, next) {
   } 
   
   res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(posts))
+  res.end(JSON.stringify({
+    code : 0,
+    data : {
+      totalPosts : totalPosts,
+      posts : posts
+    }
+  }))
 });
 
 router.post('/', fileUpload.single('postImage'), function(req, res) {

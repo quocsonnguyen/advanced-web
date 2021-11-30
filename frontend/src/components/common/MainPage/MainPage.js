@@ -13,6 +13,7 @@ function MainPage(props) {
     const [numPosts, setNumPosts] = useState(10)
     const [isShowModal, setShowModal] = useState(false)
     const [isShowModalSuccess, setShowModalSuccess] = useState(false)
+    const [totalPosts, setTotalPosts] = useState(0)
 
     socket.on('reRenderFeed', () => {
         setReLoad(!reload)
@@ -39,7 +40,10 @@ function MainPage(props) {
     useEffect(() => {
         fetch(`/api/post/num-posts/${numPosts}`)
             .then(res => res.json())
-            .then(result => setPosts(result))
+            .then(result => {
+                setTotalPosts(result.data.totalPosts)
+                setPosts(result.data.posts)
+            })
     }, [reload, numPosts])
 
     return (
@@ -69,9 +73,12 @@ function MainPage(props) {
                     }
                 })}
 
-                <div onClick={loadMorePosts} className={s.separator}>
-                    <h5>Xem thêm</h5>
-                </div>
+                {
+                    numPosts < totalPosts &&
+                    <div onClick={loadMorePosts} className={s.separator}>
+                        <h5>Xem thêm</h5>
+                    </div>
+                }
 
                 <UploadPostModal 
                     handleClose={closeUploadPostModal} isShow={isShowModal} 

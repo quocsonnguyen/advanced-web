@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { LoginPage } from './components/modules'
+import { LoginPage, ManagePage } from './components/modules'
 import { RegisterPage, MainPage, Notification } from './components/common'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,6 +20,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/notifications" element={<Notification />} />
+        <Route path="/manage" element={<ManagePage />} />
       </Routes>
     </>
   );
