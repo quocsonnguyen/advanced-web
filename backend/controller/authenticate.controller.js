@@ -48,7 +48,7 @@ exports.signup = (req, res) => {
 
 //Signin Handler
 exports.signin = (req,res) => {
-    User.findOne({ email: req.body.email }).populate("roles").exec((err,user) => {
+    User.findOne({ username: req.body.username }).populate("roles").exec((err,user) => {
         if (err) {
             res.status(500).send({message: err});
             return;
@@ -66,7 +66,7 @@ exports.signin = (req,res) => {
         if(!checkPassword) {
             return res.status(401).send({
                 //accessToken: null,
-                message: "Sai Password!"
+                message: "Sai mật khẩu!"
             })
         }
 
@@ -114,6 +114,7 @@ exports.isGoogleUserValid = async (req, res) => {
 
 exports.googleSignup = async (req, res) => {
     const user = new User({
+        username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8),

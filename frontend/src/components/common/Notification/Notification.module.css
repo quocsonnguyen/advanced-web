@@ -1,5 +1,15 @@
 .Notification {
     height: 91.5vh;
+    position: relative;
+}
+
+.Notification_pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.page-item.active .page-link:active {
+  background-color: green;
 }
 
 .separator {

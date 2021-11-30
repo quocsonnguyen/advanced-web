@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 class AuthService {
-    login(email, password) {
+    login(username, password) {
         return axios.post("/api/signin", {
-            email,
+            username,
             password
         }).then(res => {
             if (res.data.accessToken) {
