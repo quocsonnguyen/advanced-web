@@ -19,14 +19,6 @@ module.exports = function (app) {
         controller.signup
     );
 
-    app.post(
-        "/api/signup",
-        [
-            verifySignUp.checkAvaiable,
-            verifySignUp.checkRoleAvaiable
-        ],
-        controller.signup
-    );
 
     app.post(
         "/api/google/signup",

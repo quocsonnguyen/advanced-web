@@ -11,7 +11,7 @@ class AuthService {
                     id : res.data.id,
                     name: res.data.name,
                     image: res.data.image,
-                    role: res.data.role
+                    role: res.data.roles
                 }));
                 console.log(res.data);
                 localStorage.setItem('uid', res.data.id)
@@ -25,7 +25,7 @@ class AuthService {
     }
 
     register(username, email, password, roles) {
-        return axios.post("/signup", {
+        return axios.post("/api/signup", {
             username,
             email,
             password,

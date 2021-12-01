@@ -3,6 +3,9 @@ import s from './Navigation.module.css'
 import { Dropdown, Navbar, Nav, Container, Offcanvas } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 
+
+
+
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {
@@ -21,7 +24,20 @@ const Navigation = (props) => {
     const [navExpand, setNavExpand] = useState(true)
     const navigate = useNavigate()
     let currentUser = JSON.parse(localStorage.getItem('user'))
-    
+
+ 
+    let isFalculty = false;
+    let isAdmin = false
+    let i = 0;
+    for (i; i < currentUser.role.length; i++){
+        if(currentUser.role[i]==="Role: FALCULTY"){
+            isFalculty= true;
+        }
+        if(currentUser.role[i]==="Role: ADMIN"){
+            isAdmin= true;
+        }
+    }
+    console.log(isAdmin,isFalculty)
     const logout = () => {
         localStorage.removeItem('user')
         localStorage.removeItem('uid')
@@ -45,7 +61,7 @@ const Navigation = (props) => {
                         navExpand && <>
                         <Nav className="me-auto">
                             <Nav.Link href="/notifications">Thông báo</Nav.Link>
-                            <Nav.Link href="/manage">Quản lý</Nav.Link>
+                            {isAdmin &&(<Nav.Link href="/manage">Quản lý</Nav.Link>)}
                         </Nav>
                         <Nav className={s.Navigation_name_and_avatar}>
                             <div className={s.Navigation_name}>

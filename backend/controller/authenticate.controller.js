@@ -9,12 +9,13 @@ const jwt = require("jsonwebtoken");
 
 //Signup Handler
 exports.signup = (req, res) => {
+    //console.log(req.body)
     const user = new User({
-        name: req.body.name,
+        name: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
     });
-
+    //console.log(user)
     user.save((err, user) => {
         if (err) {
             res.status(500).send({ message: err });

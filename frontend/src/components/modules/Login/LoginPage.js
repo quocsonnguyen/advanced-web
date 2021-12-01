@@ -56,7 +56,7 @@ const LoginPage = (props) => {
     const handleLogin = (e) => {
         e.preventDefault();
         AuthService.login(email, password).then(
-            () => {
+            (result) => {
                 navigate('/');
             }, error => {
                 const resMessage =

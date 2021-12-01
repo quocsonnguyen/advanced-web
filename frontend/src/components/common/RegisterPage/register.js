@@ -1,110 +1,121 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthService from '../../../services/auth.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Form } from 'react-bootstrap';
+import { Col, Container, Form, Row, Table } from 'react-bootstrap';
 import { CustomButton } from '../../common';
-export default class RegisterPage extends Component {
-    constructor(props) {
-        super(props);
-        this.handleRegister = this.handleRegister.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+import style from './register.module.css'
+import { useNavigate } from 'react-router-dom';
 
-        this.state = {
-            username: "",
-            email: "",
-            password: "",
-            roles: "falculty",
-            message: ""
-        };
-    }
 
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        })
-    }
+function RegisterPage(props) {
+    const navigate = useNavigate()
 
-    onChangeEmail(e) {
-        this.setState({
-            email: e.target.value
-        })
-    }
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        })
-    }
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [users, setUser] = useState([])
 
-    handleRegister(e) {
+    useEffect(() => {
+        fetch("/fetchUser").then(res => res.json()).then(result => setUser(result))
+    }, [])
+    console.log(users)
+    const handleRegister = (e) => {
         e.preventDefault();
-
-        this.setState({
-            message: "",
-        })
-        
-        console.log(this.state)
+        let roles = ['falculty']
+        setMessage("")
+        console.log(username, email, password, roles)
         AuthService.register(
-            this.state.username,
-            this.state.email,
-            this.state.password,
-            this.state.roles
-            ).then(
-                res => {
-                    console.log(res.data.message)
-                    this.setState({
-                        message: res.data.message
-                    })
-                }, error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
+            username,
+            email,
+            password,
+            roles
+        ).then(
+            res => {
+                console.log(res.data.message)
+                setMessage(res.data.message)
 
-                    this.setState({
-                        message: resMessage
-                    });
-                }
-            )
+            }, error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-    }
-    render() {
-        return (
-            <div>
-                <Container>
-                <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
-
-                <Form onSubmit={this.handleRegister} method='POST'>
-                    <Form.Group>
-                        <Form.Label>Username: </Form.Label>
-                        <Form.Control name="username" value={this.state.username} onChange={this.onChangeUsername} type='text' placeholder="Enter Username"/>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Email: </Form.Label>
-                        <Form.Control name="email" value={this.state.email} onChange={this.onChangeEmail} type='email' placeholder="Enter Email"/>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Password: </Form.Label>
-                        <Form.Control name="password" value={this.state.password} onChange={this.onChangePassword} type='text' placeholder="Enter Password"/>
-                    </Form.Group>
-
-                    
-
-                    <CustomButton variant='fill_blue' text='Đăng Ký' />
-                </Form>
-
-                </Container>
-
-            </div>
+                setMessage(resMessage)
+            }
         )
+        navigate('/manage')
     }
+
+    return (
+        <div>
+            <Container>
+                <h1>Quản lý tài khoản</h1>
+                <Row>
+                    <Col md={5}>
+                        <div className={style.separator}>
+                            <h5>ĐĂNG KÝ TÀI KHOẢN</h5>
+                        </div>
+
+                        <Form onSubmit={handleRegister}>
+
+                            <Form.Group className={style.Register_form_field}>
+                                <Form.Label className={style.Register_form_label} >Username: </Form.Label>
+                                <Form.Control className={style.Register_form_input} name="username" value={username} onChange={(e) => { setUsername(e.target.value) }} type='text' placeholder="Enter Username" />
+                            </Form.Group>
+
+                            <Form.Group className={style.Register_form_field}>
+                                <Form.Label className={style.Register_form_label}>Email: </Form.Label>
+                                <Form.Control className={style.Register_form_input} name="email" value={email} onChange={(e) => { setEmail(e.target.value) }} type='email' placeholder="Enter Email" />
+                            </Form.Group>
+
+                            <Form.Group className={style.Register_form_field}>
+                                <Form.Label className={style.Register_form_label}>Password: </Form.Label>
+                                <Form.Control className={style.Register_form_input} name="password" value={password} onChange={(e) => { setPassword(e.target.value) }} type='password' placeholder="Enter Password" />
+                            </Form.Group>
+
+
+                            <CustomButton variant='fill_blue' text='Đăng Ký' />
+
+                        </Form>
+                    </Col>
+
+                    <Col md={7}>
+                        <div className={style.separator}>
+                            <h5>DANH SÁCH TÀI KHOẢN</h5>
+                        </div>
+                        <div>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>User Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {users.map((user) => {
+                                        return (
+                                            <tr>
+                                                <td>{user.name}</td>
+                                                <td>{user.email}</td>
+                                                <td><a href={'/authorize?_id='+user._id}>Cấp quyền</a>|<a href="/manage">Xóa</a></td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        </div>
+
+                    </Col>
+                </Row>
+            </Container>
+
+        </div>
+    )
 }
+
+
+export default RegisterPage

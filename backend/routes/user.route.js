@@ -9,7 +9,8 @@ module.exports = function(app) {
     );
     next();
   });
-
+  app.get('/fetchUser', controller.fetchUser)
+  app.get('/getUserById', controller.getUser)
   app.get("/all", controller.allAccess);
 
   app.get("/student", [jwtAuth.verifyToken], controller.userBoard);
