@@ -8,19 +8,19 @@ import style from './authorize.module.css'
 
 
 function Authorize(props) {
-    const [users, setUser] = useState([])
+    const [user, setUser] = useState()
     const [perms,setPerms] = useState(new Array(22).fill(false))
     let _userID = { id: qs.parse(window.location.search, { ignoreQueryPrefix: true })._id }
     console.log(_userID)
+    console.log(user)
 
 
     useEffect(async () => {
-        await axios.get('/getUserById', _userID).then(result => {
-            setUser(result.data)
-            console.log(result)
-        })
+        let _user = await axios.get('/getUserById', JSON.stringify(_userID))
+        setUser(_user)
         console.log(perms)
-    })
+    },[])
+
 
     const handleOnChange = (position) => {
         const updatedPerms = perms.map((permission,index)=>

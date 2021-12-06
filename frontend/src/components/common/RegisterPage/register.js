@@ -7,6 +7,7 @@ import style from './register.module.css'
 import { useNavigate } from 'react-router-dom';
 
 
+
 function RegisterPage(props) {
     const navigate = useNavigate()
 
@@ -14,12 +15,16 @@ function RegisterPage(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [users, setUser] = useState([])
+    const [users, setUsers] = useState([])
+
+
 
     useEffect(() => {
-        fetch("/fetchUser").then(res => res.json()).then(result => setUser(result))
+        fetch("/fetchUser").then(res => res.json()).then(result => setUsers(result))
     }, [])
-    console.log(users)
+
+
+
     const handleRegister = (e) => {
         e.preventDefault();
         let roles = ['falculty']
@@ -34,7 +39,6 @@ function RegisterPage(props) {
             res => {
                 console.log(res.data.message)
                 setMessage(res.data.message)
-
             }, error => {
                 const resMessage =
                     (error.response &&
@@ -58,6 +62,14 @@ function RegisterPage(props) {
                         <div className={style.separator}>
                             <h5>ĐĂNG KÝ TÀI KHOẢN</h5>
                         </div>
+
+                        {message && (
+                            <div>
+                                <div className="alert alert-danger" role="alert">
+                                    {message}
+                                </div>
+                            </div>
+                        )}
 
                         <Form onSubmit={handleRegister}>
 
@@ -86,6 +98,7 @@ function RegisterPage(props) {
                         <div className={style.separator}>
                             <h5>DANH SÁCH TÀI KHOẢN</h5>
                         </div>
+                        <br></br>
                         <div>
                             <Table striped bordered hover>
                                 <thead>
@@ -98,10 +111,10 @@ function RegisterPage(props) {
                                 <tbody>
                                     {users.map((user) => {
                                         return (
-                                            <tr>
+                                            <tr key={user._id}>
                                                 <td>{user.name}</td>
                                                 <td>{user.email}</td>
-                                                <td><a href={'/authorize?_id='+user._id}>Cấp quyền</a>|<a href="/manage">Xóa</a></td>
+                                                <td><a href={'/authorize?_id=' + user._id}>Cấp quyền</a>|<a href="/manage">Xóa</a></td>
                                             </tr>
                                         )
                                     })}
