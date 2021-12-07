@@ -6,14 +6,14 @@ class AuthService {
             username,
             password
         }).then(res => {
+            console.log(res);
             if (res.data.accessToken) {
                 localStorage.setItem("user", JSON.stringify({
                     id : res.data.id,
                     name: res.data.name,
                     image: res.data.image,
-                    role: res.data.role
+                    role: res.data.roles
                 }));
-                console.log(res.data);
                 localStorage.setItem('uid', res.data.id)
             }
             return res.data;

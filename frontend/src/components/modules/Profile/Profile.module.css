@@ -1,0 +1,32 @@
+.Profile {
+    text-align: center;
+    height: 91.5vh;
+    padding-top: 15px;
+}
+
+.Profile_avatar {
+    max-width: 11.2rem;
+    max-height: 11.2rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Profile_name {
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-bottom: .6rem;
+}
+
+.Profile_role {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-style: italic;
+    color: gray;
+}
+
+.Profile_buttons {
+    margin-top: 3.2rem;
+    display: flex;
+    justify-content: space-evenly;
+}

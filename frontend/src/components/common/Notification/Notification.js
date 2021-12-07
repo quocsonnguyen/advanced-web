@@ -5,12 +5,22 @@ import { Layout } from '../'
 import { Pagination } from 'react-bootstrap'
 
 function Notification(props) {
+    const currentUser = JSON.parse(localStorage.getItem('user'))
     const [notifications, setNotifications] = useState([])
     const [listPages, setlistPages] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [showUploadNoti, setShowUploadNoti] = useState(false)
 
     const toPage = (pageNum) => {
         setCurrentPage(pageNum)
+    }
+
+    const showUploadNoti = () => {
+        setShowUploadNoti(true)
+    }
+
+    const closeUploadNoti = () => {
+        setShowUploadNoti(false)
     }
 
     const prev = () => {
@@ -39,51 +49,60 @@ function Notification(props) {
     }, [currentPage])
 
     return (
-        <Layout>
-            <div className={s.Notification}>
-                <div className={s.separator}>
-                    <h5>THÔNG BÁO</h5>
-                </div>
+        <>
+            <Layout>
+                <div className={s.Notification}>
+                    <div className={s.separator}>
+                        <h5>THÔNG BÁO</h5>
+                    </div>
 
-                
+                    {
+                        currentUser.role === 'faculty' &&
+                        <div 
+                            className={s.Notification_upload_noti}
+                            onClick={showUploadNoti} >
+                            <b>Đăng thông báo</b>
+                        </div>
+                    }
 
-                <div className={s.Notification_list}>
-                    {notifications.map((noti) => {
-                        return (
-                            <NotiItem key={noti._id} noti={noti} />
-                        )
-                    })}
-                </div>
-
-                
-                <Pagination className={s.Notification_pagination}>
-                    <Pagination.Prev onClick={prev} />
-
-                    {listPages.map(i => {
-                        if (i === currentPage) {
+                    <div className={s.Notification_list}>
+                        {notifications.map((noti) => {
                             return (
-                                <Pagination.Item 
-                                    key={i} active
-                                >
-                                    {i}
-                                </Pagination.Item>
+                                <NotiItem key={noti._id} noti={noti} />
                             )
-                        } else {
-                            return (
-                                <Pagination.Item 
-                                    key={i} onClick={() => toPage(i)}
-                                >
-                                    {i}
-                                </Pagination.Item>
-                            )
-                        }
-                    })}
+                        })}
+                    </div>
 
-                    <Pagination.Next onClick={next} />
-                </Pagination>
-               
-            </div>
-        </Layout>
+                    
+                    <Pagination className={s.Notification_pagination}>
+                        <Pagination.Prev onClick={prev} />
+
+                        {listPages.map(i => {
+                            if (i === currentPage) {
+                                return (
+                                    <Pagination.Item 
+                                        key={i} active
+                                    >
+                                        {i}
+                                    </Pagination.Item>
+                                )
+                            } else {
+                                return (
+                                    <Pagination.Item 
+                                        key={i} onClick={() => toPage(i)}
+                                    >
+                                        {i}
+                                    </Pagination.Item>
+                                )
+                            }
+                        })}
+
+                        <Pagination.Next onClick={next} />
+                    </Pagination>
+                
+                </div>
+            </Layout>
+        </>
     );
 }
 

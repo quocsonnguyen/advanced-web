@@ -30,7 +30,9 @@ function UploadPostModal(props) {
             }
         })
         
-        
+        setPostContent('')
+        setVideoURL('')
+        setPostImage('')
     }
 
     return (

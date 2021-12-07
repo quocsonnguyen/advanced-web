@@ -1,8 +1,9 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const PostModel = require('../models/post.model')
 const UserModel = require('../models/user.model')
-const fileUpload = require('../middleware/fileUpload')
+const fileUpload = require('../middleware/fileUpload');
 
 const getTime = () => {
   let today  = new Date();
@@ -17,6 +18,11 @@ const getTime = () => {
 
 const getTotalPosts = async () => {
   let posts = await PostModel.find({}).lean()
+  return posts.length
+}
+
+const getTotalPostsFromUser = async (uid) => {
+  let posts = await PostModel.find({creatorID : uid}).lean()
   return posts.length
 }
 
@@ -53,6 +59,28 @@ router.get('/num-posts/:numPosts', async function(req, res, next) {
         break
       }
     }
+  } 
+  
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({
+    code : 0,
+    data : {
+      totalPosts : totalPosts,
+      posts : posts
+    }
+  }))
+});
+
+router.get('/u/:uid/num-posts/:numPosts', async function(req, res, next) {
+  let uid = req.params.uid
+  let numPosts = Number.parseInt(req.params.numPosts)
+  let totalPosts = await getTotalPostsFromUser(uid)
+  let user = await UserModel.find({_id : uid}).lean()
+  let posts = await PostModel.find({creatorID : uid}).limit(numPosts).lean().sort({createdTime: -1})
+
+  for (let i = 0; i < posts.length; i++) {
+    posts[i].creatorName = user[0].name
+    posts[i].creatorImage = user[0].image
   } 
   
   res.setHeader('Content-Type', 'application/json');
@@ -110,7 +138,7 @@ router.post('/:postID', fileUpload.single('postImage'), async function(req, res)
   let postID = req.params.postID
   let imageName = req.body.postImage === '' ? '' : req.file.filename
 
-  await PostModel.findOneAndUpdate(
+  await PostModel.updateOne(
     { _id: postID },
     {
       content : req.body.content,
@@ -170,15 +198,22 @@ router.post('/:postID/unlike', function(req, res) {
   res.end()
 });
 
-router.post('/:postID/delete', function(req, res) {
+router.post('/:postID/delete', async function(req, res) {
   let postID = req.params.postID
-  PostModel.findOneAndDelete(
+  
+  let post = await PostModel.findOneAndDelete(
     { _id: postID }
   )
   .exec()                  // Fails on both promise and callback versions
   .catch(err => {
       console.log(`caught error`, err);         // Never gets caught!!
   });
+
+  if (post.image) {
+    let filePath = `uploads/${post.image}`; 
+    fs.unlinkSync(filePath);
+  }
+
   res.end()
 });
 

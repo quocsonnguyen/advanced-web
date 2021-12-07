@@ -48,7 +48,7 @@ const LoginPage = (props) => {
                     id : newApiRes.user._id,
                     name: newApiRes.user.name,
                     image: newApiRes.user.image,
-                    role: newApiRes.user.role
+                    role: 'student'
                 }))
                 localStorage.setItem('uid', newApiRes.user._id)
                 navigate('/')
@@ -130,7 +130,7 @@ const LoginPage = (props) => {
                                         clientId="917753298000-r032b63avasjd0m4il2681eirlc1eoct.apps.googleusercontent.com"
                                         buttonText="Login With Google"
                                         onSuccess={responseGoogle}
-                                        onFailure={responseGoogle}
+                                        // onFailure={responseGoogle}
                                         cookiePolicy={'single_host_origin'}
                                     />
                                 </div>

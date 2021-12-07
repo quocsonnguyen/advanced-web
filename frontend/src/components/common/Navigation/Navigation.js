@@ -60,8 +60,11 @@ const Navigation = (props) => {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu className={s.Navigation_toggle_menu}>
-                                    <Dropdown.Item>
-                                        Thông tin
+                                    <Dropdown.Item href={`/wall/u/${currentUser.id}`}>
+                                        Tường của tôi
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="/my-profile">
+                                        Thông tin của tôi
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={logout}>
                                         Đăng xuất
@@ -84,7 +87,8 @@ const Navigation = (props) => {
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
                                 <Nav.Link href="/notifications">Thông báo</Nav.Link>
-                                <Nav.Link href="/notifications">Chỉnh sửa thông tin</Nav.Link>
+                                <Nav.Link href={`/wall/u/${currentUser.id}`}>Tường của tôi</Nav.Link>
+                                <Nav.Link href="/my-profile">Thông tin của tôi</Nav.Link>
                                 <Nav.Link onClick={logout} href="#">Đăng xuất</Nav.Link>
                             </Nav>
                         </Offcanvas.Body>

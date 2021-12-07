@@ -96,9 +96,10 @@ function CardPost(props) {
         <div className={s.CardPost}>
             <div className={s.CardPost_post_info}>
                 <div className={s.CardPost_avatar_name_date}>
-                    <img className={s.CardPost_avatar}
-                    src={`http://localhost:3300/api/image/${props.postInfo.creatorImage}`} alt="avatar" />
-                   
+                    <a href={`/wall/u/${props.postInfo.creatorID}`}>
+                        <img className={s.CardPost_avatar}
+                        src={`http://localhost:3300/api/image/${props.postInfo.creatorImage}`} alt="avatar" />
+                    </a>
                     <div className={s.CardPost_name_and_date}>
                         <div><b>{props.postInfo.creatorName}</b></div>
                         <div className={s.CardPost_date}>{props.postInfo.createdTime}</div>
@@ -174,7 +175,8 @@ function CardPost(props) {
                         {comments.map((cmt) => {
                             return (
                                 <CommentItem 
-                                    key={cmt._id} name={cmt.commenterName} createdTime={cmt.createdTime}
+                                    key={cmt._id} uid={cmt.commenterID}  
+                                    name={cmt.commenterName} createdTime={cmt.createdTime}
                                     content={cmt.content} image={cmt.commenterImage} />
                             )
                         })}

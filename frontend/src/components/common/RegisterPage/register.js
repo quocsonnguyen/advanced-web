@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthService from '../../../services/auth.service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form } from 'react-bootstrap';
-import { CustomButton } from '../../common';
+import { CustomButton } from '..';
 export default class RegisterPage extends Component {
     constructor(props) {
         super(props);

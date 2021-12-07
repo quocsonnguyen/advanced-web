@@ -29,4 +29,6 @@ module.exports = function (app) {
 
     app.get("/api/:gid/isValid", controller.isGoogleUserValid);
 
+    app.get("/api/getRole/:roleID", controller.getRole)
+
 };

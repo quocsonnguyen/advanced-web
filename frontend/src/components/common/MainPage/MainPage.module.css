@@ -8,9 +8,6 @@
   color: black;
   padding: .4rem .4rem;
   text-align: center;
-}
-
-.MainPage_upload_post_btn:hover {
   cursor: pointer;
 }
 

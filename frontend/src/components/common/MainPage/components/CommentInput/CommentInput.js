@@ -13,8 +13,10 @@ function CommentInput(props) {
 
     return (
         <div className={s.CommentInput}>
-            <img className={s.CommentInput_avatar}
-                src={`http://localhost:3300/api/image/${currentUser.image}`} alt="avatar" />
+            <a href={`/wall/u/${currentUser.id}`}>
+                <img className={s.CommentInput_avatar}
+                    src={`http://localhost:3300/api/image/${currentUser.image}`} alt="avatar" />
+            </a>
 
             <input className={s.CommentInput_status} placeholder="Viết bình luận ..."
             value={props.comment} onChange={e => props.onChange(e.target.value)}

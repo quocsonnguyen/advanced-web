@@ -11,9 +11,9 @@ function MainPage(props) {
     const [posts, setPosts] = useState([])
     const [reload, setReLoad] = useState(false)
     const [numPosts, setNumPosts] = useState(10)
+    const [totalPosts, setTotalPosts] = useState(0)
     const [isShowModal, setShowModal] = useState(false)
     const [isShowModalSuccess, setShowModalSuccess] = useState(false)
-    const [totalPosts, setTotalPosts] = useState(0)
 
     socket.on('reRenderFeed', () => {
         setReLoad(!reload)
