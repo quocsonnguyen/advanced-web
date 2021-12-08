@@ -22,7 +22,7 @@ function UploadNotiModal(props) {
         })
         .then(res => {
             props.handleClose()
-            socket.emit('newNoti')
+            socket.emit('newNoti', currentUser.name)
         })
     }
 

@@ -21,8 +21,9 @@ io.on("connection", function(socket) {
     io.emit('reRenderFeed')
   })
 
-  socket.on('newNoti', () => {
+  socket.on('newNoti', (faculty) => {
     io.emit('reRenderNoti')
+    io.emit('notice', faculty)
   })
 
   socket.on('newUser', () => {

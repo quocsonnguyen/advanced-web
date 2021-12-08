@@ -49,7 +49,7 @@ const Navigation = (props) => {
                         <Nav className="me-auto">
                             <Nav.Link href="/notifications">Thông báo</Nav.Link>
                             {
-                                currentUser.role === 'admin' &&
+                                currentUser && currentUser.role === 'admin' &&
                                 <Nav.Link href="/manage">Quản lý</Nav.Link>
                             }
                         </Nav>
