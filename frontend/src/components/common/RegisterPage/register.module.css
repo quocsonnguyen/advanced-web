@@ -1,4 +1,6 @@
-
+.register_container{
+  height: 100vh;
+}
 .separator {
     display: flex;
     align-items: center;

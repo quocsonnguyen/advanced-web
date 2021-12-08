@@ -6,6 +6,7 @@ import { CustomButton } from '../../common';
 import AuthService from '../../../services/auth.service';
 import { GoogleLogin } from 'react-google-login';
 import { useNavigate  } from "react-router-dom";
+import logo from './Asset/Images/tdttrans.png'
 import axios from 'axios';
 
 const LoginPage = (props) => {
@@ -85,7 +86,7 @@ const LoginPage = (props) => {
         <>
             <div className={styles.Login_background_image}></div>
             <Container fluid className={styles.Login_container}>
-                <Row>
+                <Row className={styles.Login_Form_Row}>
                     <Col md={8}>
                     </Col>
 
@@ -119,7 +120,8 @@ const LoginPage = (props) => {
                             </Form.Group>
 
                             <div className={styles.Login_login_buttons}>
-                                <CustomButton variant='fill_blue' text='Đăng Nhập' className={styles.button22} />
+                                <button className={styles.Login_button}>Đăng nhập</button>
+                                {/* <CustomButton variant='fill_blue' text='Đăng Nhập' className={styles.button22} /> */}
                                 <div className={styles.Login_google_login}>
                                     <GoogleLogin
                                         clientId="917753298000-r032b63avasjd0m4il2681eirlc1eoct.apps.googleusercontent.com"
@@ -132,6 +134,11 @@ const LoginPage = (props) => {
                             </div>
                         </Form>
                     </Col>
+                </Row>
+                <Row>
+                    <div className={styles.Login_logo}>
+                        <img className={styles.Login_logo_img} src={logo} alt="Logo_TDTU"/>
+                    </div>
                 </Row>
             </Container>
         </>

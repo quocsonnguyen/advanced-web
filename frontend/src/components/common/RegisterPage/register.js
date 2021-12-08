@@ -55,7 +55,7 @@ function RegisterPage(props) {
 
     return (
         <div>
-            <Container>
+            <Container className={style.register_container}>
                 <h1>Quản lý tài khoản</h1>
                 <Row>
                     <Col md={5}>
