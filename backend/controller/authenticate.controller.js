@@ -2,14 +2,10 @@
 const User = require("../models/user.model");
 const Role = require("../models/role.model");
 const config = require("../config/authenticate.config")
-//Library
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 //Signup Handler
-
-
 exports.signup = (req, res) => {
     const user = new User({
         username: req.body.username,
@@ -17,7 +13,6 @@ exports.signup = (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
     });
-
     user.save((err, user) => {
         if (err) {
             res.status(500).send({ message: err });
@@ -39,7 +34,10 @@ exports.signup = (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-                    res.send({message: "Đăng ký thành công"})
+                    res.send({
+                        code : 0,
+                        message: "Đăng ký thành công"
+                    })
                 })
             })
         } else {
@@ -68,7 +66,6 @@ exports.signin = (req,res) => {
 
         if(!checkPassword) {
             return res.status(401).send({
-                //accessToken: null,
                 message: "Sai mật khẩu!"
             })
         }
@@ -76,13 +73,6 @@ exports.signin = (req,res) => {
         var token = jwt.sign({id: user.id}, config.secret, {
             expiresIn: 43200
         })
-
-        // var authorities = [];
-        // let i = 0;
-        // for(i;i<user.roles.length;i++){
-        //     authorities.push(user.roles[i].name);
-
-        // }
         res.status(200).send({
             id: user._id,
             name: user.name,

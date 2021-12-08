@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Row, Col } from 'react-bootstrap';
 import styles from '../Login/LoginPage.module.css'
-import { CustomButton } from '../../common';
+// import { CustomButton } from '../../common';
 import AuthService from '../../../services/auth.service';
 import { GoogleLogin } from 'react-google-login';
-import { useNavigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
+import logo from './Asset/Images/tdttrans.png'
 import axios from 'axios';
 
 const LoginPage = (props) => {
@@ -15,40 +16,6 @@ const LoginPage = (props) => {
 
     const navigate = useNavigate()
 
-<<<<<<< HEAD
-    const responseGoogle = async (response) => {
-        let user = response.profileObj
-        console.log(user);
-        let googleId = user.googleId
-
-        let res
-        await axios.get(`/api/${googleId}/isValid`).then(result => res = result.data)
-
-        if (res.code === 0) {
-            console.log(res.message)
-            localStorage.setItem('user', JSON.stringify({
-                // id : 
-                // name: user.name,
-                // image: "cc"
-            }))
-        } else {
-            console.log(res.message)
-            let newUser = {
-                username: user.name,
-                email: user.email,
-                password: googleId,
-                googleId: googleId,
-                roles : ['student']
-            }
-            console.log(newUser)
-            await axios.post("/api/google/signup", newUser).then(result => {
-                console.log(result.code, result.message)
-            }
-            )
-        }
-
-        navigate('/')
-=======
     const responseGoogle = async (res) => {
         let user = res.profileObj
         if (user.email.slice(user.email.length - 20) === "@student.tdtu.edu.vn") {
@@ -90,7 +57,6 @@ const LoginPage = (props) => {
         } else {
             setMessage("Hãy đăng nhập bằng tài khoản sinh viên")
         }
->>>>>>> sonnguyen
     }
 
     const handleLogin = (e) => {
@@ -125,7 +91,7 @@ const LoginPage = (props) => {
         <>
             <div className={styles.Login_background_image}></div>
             <Container fluid className={styles.Login_container}>
-                <Row>
+                <Row className={styles.Login_Form_Row}>
                     <Col md={8}>
                     </Col>
 
@@ -141,40 +107,25 @@ const LoginPage = (props) => {
                         )}
 
                         <Form onSubmit={handleLogin} method='POST' className={styles.Login_form}>
-
-<<<<<<< HEAD
-                            <Form.Group className="mb-3" controlId="formEmail">
-                                <Form.Label><b>Email</b> </Form.Label>
-                                <Form.Control
-                                    name="email" value={email} type="email" placeholder="Enter email"
-                                    onChange={(e) => setEmail(e.target.value)} className={styles.Login_form_input}
-=======
                             <Form.Group className="mb-3" controlId="formUsername">
                                 <Form.Label><b>Tên đăng nhập</b></Form.Label>
                                 <Form.Control 
                                     name="username" value={username} type="text" placeholder="Nhập tên đăng nhập"
                                     onChange={(e) => setUsername(e.target.value)}  className={styles.Login_form_input} 
->>>>>>> sonnguyen
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formPassword">
-<<<<<<< HEAD
-                                <Form.Label><b>Password</b>  </Form.Label>
-                                <Form.Control
-                                    name="password" value={password} type="password" placeholder="Password"
-                                    onChange={(e) => setPassword(e.target.value)} className={styles.Login_form_input}
-=======
                                 <Form.Label><b>Mật khẩu</b></Form.Label>
                                 <Form.Control 
                                     name="password" value={password} type="password" placeholder="Nhật mật khẩu"
                                     onChange={(e) => setPassword(e.target.value)}  className={styles.Login_form_input} 
->>>>>>> sonnguyen
                                 />
                             </Form.Group>
 
                             <div className={styles.Login_login_buttons}>
-                                <CustomButton variant='fill_blue' text='Đăng Nhập' className={styles.button22} />
+                                <button className={styles.Login_button}>Đăng nhập</button>
+                                {/* <CustomButton variant='fill_blue' text='Đăng Nhập' className={styles.button22} /> */}
                                 <div className={styles.Login_google_login}>
                                     <GoogleLogin
                                         clientId="917753298000-r032b63avasjd0m4il2681eirlc1eoct.apps.googleusercontent.com"
@@ -187,6 +138,11 @@ const LoginPage = (props) => {
                             </div>
                         </Form>
                     </Col>
+                </Row>
+                <Row>
+                    <div className={styles.Login_logo}>
+                        <img className={styles.Login_logo_img} src={logo} alt="Logo_TDTU"/>
+                    </div>
                 </Row>
             </Container>
         </>

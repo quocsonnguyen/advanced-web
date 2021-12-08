@@ -1,0 +1,42 @@
+.register_container{
+  height: 100vh;
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+    
+  .separator::before,
+  .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 2px solid gray;
+  }
+  
+  .separator:not(:empty)::before {
+    margin-right: .75em;
+  }
+  
+  .separator:not(:empty)::after {
+    margin-left: .75em;
+  }
+.Register_form_field{
+    padding-top: 1em;
+}
+.Register_form_input{
+    width: 30em;
+    border-radius: 50px;
+    height: 47px;
+    border-style: solid;
+    border-color: rgb(34  , 37 , 41);
+    border-width: 3px;
+    background-color: rgba(202, 202, 202, 0);
+}
+
+.Register_form_label{
+    font-weight: bold;
+}

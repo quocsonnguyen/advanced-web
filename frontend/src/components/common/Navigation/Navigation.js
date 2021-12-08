@@ -3,6 +3,9 @@ import s from './Navigation.module.css'
 import { Dropdown, Navbar, Nav, Container, Offcanvas } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 
+
+
+
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
     useLayoutEffect(() => {
@@ -45,7 +48,10 @@ const Navigation = (props) => {
                         navExpand && <>
                         <Nav className="me-auto">
                             <Nav.Link href="/notifications">Thông báo</Nav.Link>
-                            <Nav.Link href="/manage">Quản lý</Nav.Link>
+                            {
+                                currentUser.role === 'admin' &&
+                                <Nav.Link href="/manage">Quản lý</Nav.Link>
+                            }
                         </Nav>
                         <Nav className={s.Navigation_name_and_avatar}>
                             <div className={s.Navigation_name}>

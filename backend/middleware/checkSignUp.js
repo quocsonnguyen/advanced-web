@@ -3,7 +3,8 @@ const User = require("../models/user.model");
 
 checkAvaiable = (req, res, next) => {
     //Check Duplicate Username
-    User.findOne({ username: req.body.username }).exec((err, user) => {
+    User.findOne({ name: req.body.username }).exec((err, user) => {
+        //console.log(req.body)
         if (err) {
             res.status(500).send({ message: err });
             return;
