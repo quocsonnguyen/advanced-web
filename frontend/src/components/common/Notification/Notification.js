@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import s from './Notification.module.css'
 import NotiItem from './components/NotiItem/NotiItem'
+import UploadNotiModal from './components/UploadNotiModal/UploadNotiModal';
 import { Layout } from '../'
 import { Pagination } from 'react-bootstrap'
+import { socket } from '../../../App';
 
 function Notification(props) {
     const currentUser = JSON.parse(localStorage.getItem('user'))
@@ -10,16 +12,21 @@ function Notification(props) {
     const [listPages, setlistPages] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [showUploadNoti, setShowUploadNoti] = useState(false)
+    const [reload, setReLoad] = useState(false)
+
+    socket.on('reRenderNoti', () => {
+        setReLoad(!reload)
+    })
 
     const toPage = (pageNum) => {
         setCurrentPage(pageNum)
     }
 
-    const showUploadNoti = () => {
+    const showUploadNotiModal = () => {
         setShowUploadNoti(true)
     }
 
-    const closeUploadNoti = () => {
+    const closeUploadNotiModal = () => {
         setShowUploadNoti(false)
     }
 
@@ -46,10 +53,14 @@ function Notification(props) {
                 setlistPages(listPages)
                 setNotifications(result.data.notis)
             })
-    }, [currentPage])
+    }, [currentPage, reload])
 
     return (
         <>
+            {
+                showUploadNoti && 
+                <UploadNotiModal isShow={showUploadNoti} handleClose={closeUploadNotiModal} />
+            }
             <Layout>
                 <div className={s.Notification}>
                     <div className={s.separator}>
@@ -60,7 +71,7 @@ function Notification(props) {
                         currentUser.role === 'faculty' &&
                         <div 
                             className={s.Notification_upload_noti}
-                            onClick={showUploadNoti} >
+                            onClick={showUploadNotiModal} >
                             <b>Đăng thông báo</b>
                         </div>
                     }
@@ -73,10 +84,8 @@ function Notification(props) {
                         })}
                     </div>
 
-                    
                     <Pagination className={s.Notification_pagination}>
                         <Pagination.Prev onClick={prev} />
-
                         {listPages.map(i => {
                             if (i === currentPage) {
                                 return (
@@ -96,10 +105,8 @@ function Notification(props) {
                                 )
                             }
                         })}
-
                         <Pagination.Next onClick={next} />
                     </Pagination>
-                
                 </div>
             </Layout>
         </>

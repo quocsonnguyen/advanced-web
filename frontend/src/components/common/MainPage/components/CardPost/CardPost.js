@@ -9,8 +9,7 @@ import { Dropdown } from 'react-bootstrap'
 import { BsThreeDots } from 'react-icons/bs'
 import { FcLike } from 'react-icons/fc'
 import { FaRegComment } from 'react-icons/fa'
-import io from 'socket.io-client';
-const socket = io();
+import { socket } from '../../../../../App';
 
 function CardPost(props) {
     const [postID] = useState(props.postInfo._id)

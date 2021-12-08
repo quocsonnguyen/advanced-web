@@ -2,6 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { LoginPage, ManagePage, WallPage, ProfilePage } from './components/modules'
 import { RegisterPage, MainPage, Notification } from './components/common'
+import io from 'socket.io-client'
+const socket = io()
 
 function App() {
   return (
@@ -19,4 +21,7 @@ function App() {
   );
 }
 
-export default App;
+export {
+  App,
+  socket
+} ;

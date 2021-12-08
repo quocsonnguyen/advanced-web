@@ -48,6 +48,7 @@ router.post('/', function(req, res) {
     let createdTime = dd + '/' + mm + '/' + yyyy + ', ' + hour + ':' + minute;
 
     let noti = {
+        creatorID: req.body.creatorID,
         faculty: req.body.faculty,
         title: req.body.title,
         description: req.body.description,

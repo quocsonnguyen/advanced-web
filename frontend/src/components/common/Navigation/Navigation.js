@@ -60,9 +60,12 @@ const Navigation = (props) => {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu className={s.Navigation_toggle_menu}>
-                                    <Dropdown.Item href={`/wall/u/${currentUser.id}`}>
-                                        Tường của tôi
-                                    </Dropdown.Item>
+                                    {
+                                        currentUser && 
+                                        <Dropdown.Item href={`/wall/u/${currentUser.id}`}>
+                                            Tường của tôi
+                                        </Dropdown.Item>
+                                    }
                                     <Dropdown.Item href="/my-profile">
                                         Thông tin của tôi
                                     </Dropdown.Item>
@@ -87,7 +90,7 @@ const Navigation = (props) => {
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
                                 <Nav.Link href="/notifications">Thông báo</Nav.Link>
-                                <Nav.Link href={`/wall/u/${currentUser.id}`}>Tường của tôi</Nav.Link>
+                                {currentUser && <Nav.Link href={`/wall/u/${currentUser.id}`}>Tường của tôi</Nav.Link>}
                                 <Nav.Link href="/my-profile">Thông tin của tôi</Nav.Link>
                                 <Nav.Link onClick={logout} href="#">Đăng xuất</Nav.Link>
                             </Nav>
@@ -95,18 +98,6 @@ const Navigation = (props) => {
                     </Navbar.Offcanvas>
                 </Container>
             </Navbar>
-            {/* <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="/"><b>STUDENT SOCIAL MEDIA</b></Navbar.Brand>
-
-                    <Nav>
-
-                    </Nav>
-
-
-                    
-                </Container>
-            </Navbar> */}
         </div>
     )
 };

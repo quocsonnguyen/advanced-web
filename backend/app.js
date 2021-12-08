@@ -21,6 +21,10 @@ io.on("connection", function(socket) {
     io.emit('reRenderFeed')
   })
 
+  socket.on('newNoti', () => {
+    io.emit('reRenderNoti')
+  })
+
   socket.on('reloadFeed', () => {
     io.emit('reRenderFeed')
   })

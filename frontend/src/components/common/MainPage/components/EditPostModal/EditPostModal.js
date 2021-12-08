@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import s from './EditPostModal.module.css'
 import axios from 'axios';
-import io from 'socket.io-client'
-const socket = io()
+import { socket } from '../../../../../App';
 
 function EditPostModal(props) {
     const [postContent, setPostContent] = useState(props.postInfo.content)
