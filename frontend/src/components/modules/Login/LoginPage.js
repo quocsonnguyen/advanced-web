@@ -10,11 +10,12 @@ import axios from 'axios';
 
 const LoginPage = (props) => {
     const [message, setMessage] = useState("")
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const navigate = useNavigate()
 
+<<<<<<< HEAD
     const responseGoogle = async (response) => {
         let user = response.profileObj
         console.log(user);
@@ -47,11 +48,54 @@ const LoginPage = (props) => {
         }
 
         navigate('/')
+=======
+    const responseGoogle = async (res) => {
+        let user = res.profileObj
+        if (user.email.slice(user.email.length - 20) === "@student.tdtu.edu.vn") {
+            let googleId = user.googleId
+        
+            let apiRes
+            await axios.get(`/api/${googleId}/isValid`).then(result => apiRes = result.data)
+            
+            if (apiRes.code === 0) {
+                localStorage.setItem('user', JSON.stringify({
+                    id : apiRes.user._id,
+                    name: apiRes.user.name,
+                    image: apiRes.user.image,
+                    role: apiRes.user.role
+                }))
+                localStorage.setItem('uid', apiRes.user._id)
+                navigate('/')
+            } else {
+                let newUser = {
+                    username : '',
+                    name : user.name,
+                    email : user.email,
+                    password : user.email,
+                    googleId : googleId,
+                    roles : ['student']
+                }
+
+                let newApiRes
+                await axios.post('/api/google/signup', newUser).then(result => newApiRes = result.data)
+                localStorage.setItem('user', JSON.stringify({
+                    id : newApiRes.user._id,
+                    name: newApiRes.user.name,
+                    image: newApiRes.user.image,
+                    role: 'student'
+                }))
+                localStorage.setItem('uid', newApiRes.user._id)
+                navigate('/')
+            }
+        } else {
+            setMessage("Hãy đăng nhập bằng tài khoản sinh viên")
+        }
+>>>>>>> sonnguyen
     }
 
     const handleLogin = (e) => {
         e.preventDefault();
-        AuthService.login(email, password).then(
+        AuthService.login(username, password).then(
             () => {
                 navigate('/');
             }, error => {
@@ -74,8 +118,8 @@ const LoginPage = (props) => {
     }
 
     useEffect(() => {
-        // checkLogin()
-    }, [])
+        checkLogin()
+    })
 
     return (
         <>
@@ -98,19 +142,34 @@ const LoginPage = (props) => {
 
                         <Form onSubmit={handleLogin} method='POST' className={styles.Login_form}>
 
+<<<<<<< HEAD
                             <Form.Group className="mb-3" controlId="formEmail">
                                 <Form.Label><b>Email</b> </Form.Label>
                                 <Form.Control
                                     name="email" value={email} type="email" placeholder="Enter email"
                                     onChange={(e) => setEmail(e.target.value)} className={styles.Login_form_input}
+=======
+                            <Form.Group className="mb-3" controlId="formUsername">
+                                <Form.Label><b>Tên đăng nhập</b></Form.Label>
+                                <Form.Control 
+                                    name="username" value={username} type="text" placeholder="Nhập tên đăng nhập"
+                                    onChange={(e) => setUsername(e.target.value)}  className={styles.Login_form_input} 
+>>>>>>> sonnguyen
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formPassword">
+<<<<<<< HEAD
                                 <Form.Label><b>Password</b>  </Form.Label>
                                 <Form.Control
                                     name="password" value={password} type="password" placeholder="Password"
                                     onChange={(e) => setPassword(e.target.value)} className={styles.Login_form_input}
+=======
+                                <Form.Label><b>Mật khẩu</b></Form.Label>
+                                <Form.Control 
+                                    name="password" value={password} type="password" placeholder="Nhật mật khẩu"
+                                    onChange={(e) => setPassword(e.target.value)}  className={styles.Login_form_input} 
+>>>>>>> sonnguyen
                                 />
                             </Form.Group>
 
@@ -121,7 +180,7 @@ const LoginPage = (props) => {
                                         clientId="917753298000-r032b63avasjd0m4il2681eirlc1eoct.apps.googleusercontent.com"
                                         buttonText="Login With Google"
                                         onSuccess={responseGoogle}
-                                        onFailure={responseGoogle}
+                                        // onFailure={responseGoogle}
                                         cookiePolicy={'single_host_origin'}
                                     />
                                 </div>

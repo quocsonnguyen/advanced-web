@@ -46,13 +46,13 @@ function initial() {
         });
   
         new Role({
-          name: "falculty"
+          name: "faculty"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'falculty' to roles collection");
+          console.log("added 'faculty' to roles collection");
         });
   
         new Role({

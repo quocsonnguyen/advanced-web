@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import s from './UploadPostModal.module.css'
 import axios from 'axios';
-import io from 'socket.io-client'
-const socket = io()
+import { socket } from '../../../../../App';
 
 function UploadPostModal(props) {
     const [postContent, setPostContent ] = useState("")
@@ -30,7 +29,9 @@ function UploadPostModal(props) {
             }
         })
         
-        
+        setPostContent('')
+        setVideoURL('')
+        setPostImage('')
     }
 
     return (

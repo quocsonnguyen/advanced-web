@@ -2,11 +2,16 @@ const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
 let notificationSchema = new mongoose.Schema({
+    creatorID : {
+        type:String,
+        required:true,
+        unique:false,
+    },
     faculty : {
         type:String,
         required:true,
         unique:false,
-        index:true,
+        index:false,
     },
     title : {
         type:String,

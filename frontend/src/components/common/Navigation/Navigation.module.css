@@ -1,0 +1,36 @@
+@media screen and (max-width: 600px) {
+    .Navigation_name {
+        display: none;
+    }
+}
+
+.Navigation_name_and_avatar {
+    display: flex;
+    align-items: center;
+}
+
+.Navigation_name {
+    color: white;
+    margin-right: 10px;
+}
+
+.Navigation_avatar {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Navigation_avatar:after {
+    display: none !important;
+}
+
+.Navigation_avatar_img {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+}
+
+.Navigation_toggle_menu {
+    margin: 0
+}

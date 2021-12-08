@@ -1,13 +1,20 @@
 import axios from 'axios';
 
 class AuthService {
-    login(email, password) {
-        return axios.post("/signin", {
-            email,
+    login(username, password) {
+        return axios.post("/api/signin", {
+            username,
             password
         }).then(res => {
+            console.log(res);
             if (res.data.accessToken) {
-                localStorage.setItem("user", JSON.stringify(res.data));
+                localStorage.setItem("user", JSON.stringify({
+                    id : res.data.id,
+                    name: res.data.name,
+                    image: res.data.image,
+                    role: res.data.roles
+                }));
+                localStorage.setItem('uid', res.data.id)
             }
             return res.data;
         })
