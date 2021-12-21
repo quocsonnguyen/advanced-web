@@ -201,7 +201,7 @@ router.post('/:postID/unlike', function(req, res) {
 router.post('/:postID/delete', async function(req, res) {
   let postID = req.params.postID
   
-  let post = await PostModel.findOneAndDelete(
+  let post = await PostModel.deleteOne(
     { _id: postID }
   )
   .exec()                  // Fails on both promise and callback versions
@@ -223,19 +223,12 @@ router.post('/:postID/comment/:commentID/delete', async function(req, res) {
 
   console.log(postID);
   console.log(commentID);
-  
-  // let post = await PostModel.findOneAndDelete(
-  //   { _id: postID }
-  // )
-  // .exec()                  // Fails on both promise and callback versions
-  // .catch(err => {
-  //     console.log(`caught error`, err);         // Never gets caught!!
-  // });
 
-  // if (post.image) {
-  //   let filePath = `uploads/${post.image}`; 
-  //   fs.unlinkSync(filePath);
-  // }
+
+  await PostModel.updateOne(
+    { _id : postID },
+    { $pull : {comments : { _id : commentID}} }
+  )
 
   res.end()
 });

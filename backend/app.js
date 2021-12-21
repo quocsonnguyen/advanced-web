@@ -37,6 +37,10 @@ io.on("connection", function(socket) {
   socket.on('editPost', (pid) => {
     io.emit('reRenderPost', pid)
   })
+
+  socket.on('reloadComment', () => {
+    io.emit('reRenderComment')
+  })
 });
 
 var corsOptions = {
