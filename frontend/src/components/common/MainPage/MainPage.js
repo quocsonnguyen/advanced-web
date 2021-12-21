@@ -4,8 +4,7 @@ import { Layout } from '../'
 import CardPost from './components/CardPost/CardPost'
 import UploadPostModal from './components/UploadPostModal/UploadPostModal';
 import ModalSuccess from './components/ModalSuccess/ModalSuccess'
-import io from 'socket.io-client'
-const socket = io()
+import {socket} from '../../../App'
 
 function MainPage(props) {
     const [posts, setPosts] = useState([])

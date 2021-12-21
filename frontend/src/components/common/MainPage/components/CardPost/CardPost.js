@@ -24,6 +24,7 @@ function CardPost(props) {
     const [totalComment, setTotalComment] = useState()
     const [comments, setComments] = useState()
     const [reLoadPost, setReLoadPost] = useState(false)
+    const [reLoadComment, setReLoadComment] = useState(false)
     const [showModalEdit, setShowModalEdit] = useState(false)
     const [showModalDelete, setShowModalDelete] = useState(false)
 
@@ -31,6 +32,10 @@ function CardPost(props) {
         if (postID === pid) {
             setReLoadPost(!reLoadPost)
         }
+    })
+
+    socket.on('reRenderComment', () => {
+        setReLoadComment(!reLoadComment)
     })
 
     useEffect(() => {
@@ -48,7 +53,7 @@ function CardPost(props) {
                     console.log(error);
                 }
             )
-    }, [reLoadPost, postID])
+    }, [reLoadPost, reLoadComment, postID])
 
     const renderCommentSection = () => {
         setShowComment(!showComment)

@@ -11,6 +11,11 @@ function UploadPostModal(props) {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
+
+        if (postContent === videoURL && postContent === postImage ) {
+            return
+        }
+
         let uid = localStorage.getItem('uid')
         let formData = new FormData()
         formData.append('creatorID', uid)

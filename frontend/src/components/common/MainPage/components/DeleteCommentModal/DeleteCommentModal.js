@@ -1,8 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
-import io from 'socket.io-client'
-const socket = io()
+import { socket } from '../../../../../App'
 
 function DeleteCommentModal(props) {
 
@@ -11,7 +10,7 @@ function DeleteCommentModal(props) {
         .then(res => {
             props.handleClose()
             if (res.status === 200) {
-                // socket.emit('reloadFeed')
+                socket.emit('reloadComment')
             }
         })
     }
