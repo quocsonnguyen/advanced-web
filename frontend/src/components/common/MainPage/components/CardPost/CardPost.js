@@ -13,7 +13,10 @@ import { socket } from '../../../../../App';
 
 function CardPost(props) {
     const [postID] = useState(props.postInfo._id)
-    const [showOptions] = useState(props.postInfo.creatorID === localStorage.getItem('uid'))
+    const [showOptions] = useState(
+        props.postInfo.creatorID === localStorage.getItem('uid') ||
+        JSON.parse(localStorage.getItem('user')).role === 'admin'
+    )
     const [commentContent, setCommentContent] = useState("")
     const [showComment, setShowComment] = useState(false);
     const [content, setContent] = useState()
@@ -174,7 +177,7 @@ function CardPost(props) {
                         {comments.map((cmt) => {
                             return (
                                 <CommentItem 
-                                    key={cmt._id} uid={cmt.commenterID}  
+                                    key={cmt._id} uid={cmt.commenterID} postID={postID} commentID={cmt._id}
                                     name={cmt.commenterName} createdTime={cmt.createdTime}
                                     content={cmt.content} image={cmt.commenterImage} />
                             )

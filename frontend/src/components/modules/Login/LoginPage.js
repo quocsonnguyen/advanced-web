@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Row, Col } from 'react-bootstrap';
 import styles from '../Login/LoginPage.module.css'
-// import { CustomButton } from '../../common';
 import AuthService from '../../../services/auth.service';
 import { GoogleLogin } from 'react-google-login';
 import { useNavigate  } from "react-router-dom";

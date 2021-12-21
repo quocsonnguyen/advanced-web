@@ -217,4 +217,27 @@ router.post('/:postID/delete', async function(req, res) {
   res.end()
 });
 
+router.post('/:postID/comment/:commentID/delete', async function(req, res) {
+  let postID = req.params.postID
+  let commentID = req.params.commentID
+
+  console.log(postID);
+  console.log(commentID);
+  
+  // let post = await PostModel.findOneAndDelete(
+  //   { _id: postID }
+  // )
+  // .exec()                  // Fails on both promise and callback versions
+  // .catch(err => {
+  //     console.log(`caught error`, err);         // Never gets caught!!
+  // });
+
+  // if (post.image) {
+  //   let filePath = `uploads/${post.image}`; 
+  //   fs.unlinkSync(filePath);
+  // }
+
+  res.end()
+});
+
 module.exports = router;

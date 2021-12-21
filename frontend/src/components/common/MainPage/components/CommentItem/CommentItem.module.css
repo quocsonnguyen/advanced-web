@@ -18,6 +18,10 @@
     margin-right: 5px;
 }
 
+.CommentItem_comment_text {
+    white-space: initial;
+}
+
 .CommentItem_commented_time {
     color: gray;
     font-size: 12px;
@@ -36,4 +40,40 @@
 .CommentItem_more_option:hover {
     background-color: #e9ecf0;
     cursor: pointer;
+}
+
+.CommentItem_toggle_btn {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s all linear;
+    cursor: pointer;
+    color: #343a40;
+    border: none;
+    background-color: #ffffff;
+}
+
+.CommentItem_toggle_btn:hover {
+    background-color: #e9ecf0;
+    border: none;
+    color: #343a40;
+}
+
+.CommentItem_toggle_btn:focus {
+    outline: none !important;
+    outline-offset: none !important;
+    background-color: #e9ecf0;
+    color: #343a40;
+}
+
+.CommentItem_toggle_btn:after {
+    display: none;
+}
+
+.CommentItem_toggle_menu {
+    margin-top: 5px;
+    background-color: #333;
 }
